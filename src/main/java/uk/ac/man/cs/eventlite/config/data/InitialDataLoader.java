@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import uk.ac.man.cs.eventlite.dao.EventService;
 import uk.ac.man.cs.eventlite.dao.VenueService;
+import uk.ac.man.cs.eventlite.entities.Venue;
 import uk.ac.man.cs.eventlite.entities.Event;
 
 
@@ -31,12 +32,25 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 
+		if (eventService.count() > 0 && venueService.count() > 0) {
 		if (eventService.count() > 0 && eventService.count() > 0) {
 			log.info("Database already populated. Skipping data initialization.");
 			return;
 		}
 
 		// Build and save initial models here.
+		
+		Venue venue1 = new Venue();
+		Venue venue2 = new Venue();
+		venue1.setCapacity(80);
+		venue1.setId(1);
+		venue1.setName("Kilburn, G23");
+		venue2.setCapacity(10000);
+		venue2.setId(2);
+		venue2.setName("online");
+		venueService.save(venue1);
+		venueService.save(venue2);
+
 		Event event1 = new Event();
 		event1.setId(1);
 		event1.setDate(LocalDate.of(2021,05,13));
@@ -61,6 +75,6 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		event3.setVenue(2);
 		eventService.save(event3);
 			
-		
 	}
+	
 }
