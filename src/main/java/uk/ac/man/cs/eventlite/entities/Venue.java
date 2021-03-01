@@ -8,8 +8,10 @@ import javax.persistence.Table;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 
@@ -18,6 +20,7 @@ import javax.persistence.GeneratedValue;
 
 public class Venue {
 	@Id
+	@Column(name = "venue_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 
 	private long id;
@@ -26,8 +29,9 @@ public class Venue {
 
 	private int capacity;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="venue")
-	private List<Event> events = new ArrayList<>();
+	@OneToMany(targetEntity=Venue.class,mappedBy= "events",cascade=CascadeType.ALL)
+	@Column(name = "events")
+	private Set<Event> events;
 	
 	public Venue() {
 	}

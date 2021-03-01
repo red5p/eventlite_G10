@@ -75,12 +75,11 @@ public class Event {
 		this.name = name;
 	}
 
-	public long getVenue() {
-		return venue.getId();
+	public Venue getVenue() {
+		return venue;
 	}
 
-	public void setVenue(long venue) {
-		//this.venue = venue;
-		this.venue.setId(venue);
+	public void setVenue(Venue venue) {
+		this.venue = venue;
 	}
 }
