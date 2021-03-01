@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
@@ -32,8 +34,12 @@ public class Event {
 
 	private String name;
 
-	private long venue;
-
+	//private long venue;
+	
+	@ManyToOne
+	@JoinColumn(name="venue_id",nullable=false)
+	private Venue venue;
+	
 	public Event() {
 	}
 
@@ -70,10 +76,11 @@ public class Event {
 	}
 
 	public long getVenue() {
-		return venue;
+		return venue.getId();
 	}
 
 	public void setVenue(long venue) {
-		this.venue = venue;
+		//this.venue = venue;
+		this.venue.setId(venue);
 	}
 }
