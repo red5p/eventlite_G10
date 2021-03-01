@@ -33,7 +33,6 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 
 		if (eventService.count() > 0 && venueService.count() > 0) {
-		if (eventService.count() > 0 && eventService.count() > 0) {
 			log.info("Database already populated. Skipping data initialization.");
 			return;
 		}
