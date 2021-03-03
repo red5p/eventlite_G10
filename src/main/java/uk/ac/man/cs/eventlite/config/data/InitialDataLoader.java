@@ -33,7 +33,6 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 
 		if (eventService.count() > 0 && venueService.count() > 0) {
-		if (eventService.count() > 0 && eventService.count() > 0) {
 			log.info("Database already populated. Skipping data initialization.");
 			return;
 		}
@@ -53,28 +52,27 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
 		Event event1 = new Event();
 		event1.setId(1);
-		event1.setDate(LocalDate.of(2021,05,13));
-		event1.setTime(LocalTime.of(16,00));
+		event1.setDate(LocalDate.parse("2021,05,13"));
+		event1.setTime(LocalTime.parse("16,00"));
 		event1.setName("COMP23412 Showcase, group G");
 		event1.setVenue(2);
 		eventService.save(event1);
 		
 		Event event2 = new Event();
 		event2.setId(2);
-		event2.setDate(LocalDate.of(2021,05,11));
-		event2.setTime(LocalTime.of(11,00));
+		event2.setDate(LocalDate.parse("2021,05,11"));
+		event2.setTime(LocalTime.parse("11,00"));
 		event2.setName("COMP23412 Showcase, group H");
 		event2.setVenue(2);
 		eventService.save(event2);
    
 	    Event event3 = new Event();
 		event3.setId(3);
-		event3.setDate(LocalDate.of(2021,05,10));
-		event3.setTime(LocalTime.of(16,00));
+		event3.setDate(LocalDate.parse("2021,05,10"));
+		event3.setTime(LocalTime.parse("16,00"));
 		event3.setName("COMP23412 Showcase, group F");
 		event3.setVenue(2);
 		eventService.save(event3);
 			
 	}
-	
 }
