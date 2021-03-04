@@ -37,11 +37,6 @@ public class EventServiceImpl implements EventService {
 			}
 		});
 		
-		for(int i = 0; i<= arr.size(); i++) {
-			System.out.println(arr.get(i).getDate());
-			System.out.println(arr.get(i).getTime());
-		}
-		
 		return arr;
 	}
 	
