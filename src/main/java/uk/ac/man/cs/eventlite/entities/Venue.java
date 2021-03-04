@@ -2,7 +2,16 @@ package uk.ac.man.cs.eventlite.entities;
 
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 
@@ -11,6 +20,7 @@ import javax.persistence.GeneratedValue;
 
 public class Venue {
 	@Id
+	@Column(name = "venue_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 
 	private long id;
@@ -18,7 +28,11 @@ public class Venue {
 	private String name;
 
 	private int capacity;
-
+	
+	@OneToMany(targetEntity=Venue.class,mappedBy= "events",cascade=CascadeType.ALL)
+	@Column(name = "events")
+	private Set<Event> events;
+	
 	public Venue() {
 	}
 	
