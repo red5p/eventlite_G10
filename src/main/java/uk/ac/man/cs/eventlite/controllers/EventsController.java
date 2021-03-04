@@ -22,7 +22,7 @@ public class EventsController {
 
 	@GetMapping
 	public String getAllEvents(Model model) {
-
+		model.addAttribute("venues", venueService.findAll());
 		model.addAttribute("events", eventService.findAll());
 		return "events/index";
 	}
