@@ -42,7 +42,7 @@ public class EventServiceImpl implements EventService {
 			System.out.println(arr.get(i).getTime());
 		}
 		
-		return eventRepository.findAll();
+		return arr;
 	}
 	
 	
