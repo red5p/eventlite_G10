@@ -20,66 +20,77 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Table(name = "events")
 public class Event {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate date;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING)
-	@DateTimeFormat(pattern = "HH:mm")
-	private LocalTime time;
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    @DateTimeFormat(pattern = "HH:mm")
+    private LocalTime time;
 
-	private String name;
+    private String name;
 
-	//private long venue;
-	
-	@ManyToOne
-	@JoinColumn(name="venue_id",nullable=false)
-	private Venue venue;
-	
-	public Event() {
-	}
+    //private long venue;
 
-	public long getId() {
-		return id;
-	}
+    @ManyToOne
+    @JoinColumn(name = "venue_id", nullable = false)
+    private Venue venue;
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public Event() {}
 
-	public LocalDate getDate() {
-		return date;
-	}
 
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
+    public Event(Venue venue, String name, LocalDate localdate, LocalTime localtime) {
+        this.venue = venue;
+        this.name = name;
+        this.date = localdate;
+        this.time = localtime;
 
-	public LocalTime getTime() {
-		return time;
-	}
+    }
 
-	public void setTime(LocalTime time) {
-		this.time = time;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public String getName() {
-		return name;
-	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public Venue getVenue() {
-		return venue;
-	}
 
-	public void setVenue(Venue venue) {
-		this.venue = venue;
-	}
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate localdate) {
+        this.date = localdate;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime localtime) {
+        this.time = localtime;
+    }
+
+
+    public Venue getVenue() {
+        return venue;
+    }
+
+
+    public void setVenue(Venue venue) {
+        this.venue = venue;
+    }
 }
