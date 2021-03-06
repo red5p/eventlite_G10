@@ -43,7 +43,7 @@ public class EventsControllerApi {
 		return CollectionModel.of(events, selfLink);
 	}
 	
-	@DeleteMapping("/delete{id}")
+	@DeleteMapping("/delete/{id}")
 	public void deleteEvent(@PathVariable Long id) {
 		eventService.deleteById(id);
 	}
