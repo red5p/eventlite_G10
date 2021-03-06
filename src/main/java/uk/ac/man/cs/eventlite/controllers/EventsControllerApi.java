@@ -9,7 +9,9 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,5 +41,10 @@ public class EventsControllerApi {
 		Link selfLink = linkTo(methodOn(EventsControllerApi.class).getAllEvents()).withSelfRel();
 
 		return CollectionModel.of(events, selfLink);
+	}
+	
+	@DeleteMapping("/delete{id}")
+	public void deleteEvent(@PathVariable Long id) {
+		eventService.deleteById(id);
 	}
 }
