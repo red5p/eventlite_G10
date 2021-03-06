@@ -24,6 +24,12 @@
           <td th:text="${e.venue.name}">Event venue</td>
           <td th:text="${{e.date}}">Event date</td>
           <td th:text="${{e.time}}">Event time</td>
+          <td>
+          	<form th:action = "@{/events/delete}">
+          		<button class = "btn btn-danger" type = "submit" th:name = "id" th:value = "${e.id}">
+          			Delete Event
+          		</button>
+          	</td>
         </tr>
       </tbody>
     </table>
