@@ -36,8 +36,8 @@
       </tbody>
     </table>
     
-    <form th:action="@{/greeting/{num}(num=${id})}" th:method="search">
-      <input type="text" id="keyword" name="">
+    <form th:action="@{/events/search}" th:method="get">
+      <input type="text" id="eventSearch" name="eventSearch">
       <button type="submit" class="btn btn-primary"><i class="fas fa-search" aria-hidden="true"></i> Search </button>
     </form>
 

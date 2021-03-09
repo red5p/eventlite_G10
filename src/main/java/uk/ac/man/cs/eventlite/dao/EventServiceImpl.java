@@ -53,11 +53,11 @@ public class EventServiceImpl implements EventService {
 	}
 	
 	@Override
-	public Iterable<Event> findByName(String name) {
+	public Iterable<Event> findByKeyword(String k) {
 		Iterable<Event> events = eventRepository.findAll();
 		ArrayList<Event> result = new ArrayList<Event>();
 		for (Event e:events) {
-			if (e.getName().contains(name)) {
+			if (e.getName().toLowerCase().contains(k.toLowerCase())) {
 				result.add(e);
 			}
 		}
