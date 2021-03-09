@@ -10,6 +10,11 @@ public interface EventService {
 	
 	public void save(Event event);
 
+
 	public void deleteById(Long id);
+
+	
+	public Iterable<Event> findByName(String name);
+
 }
 

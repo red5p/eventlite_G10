@@ -1,8 +1,7 @@
 package uk.ac.man.cs.eventlite.dao;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.ac.man.cs.eventlite.entities.Event;
@@ -47,8 +46,22 @@ public class EventServiceImpl implements EventService {
 		eventRepository.save(event);
 	}
 
+
 	@Override
 	public void deleteById(Long id) {
 		eventRepository.deleteById(id);		
+	}
+	
+	@Override
+	public Iterable<Event> findByName(String name) {
+		Iterable<Event> events = eventRepository.findAll();
+		ArrayList<Event> result = new ArrayList<Event>();
+		for (Event e:events) {
+			if (e.getName().contains(name)) {
+				result.add(e);
+			}
+		}
+		return result;
+
 	}
 }
