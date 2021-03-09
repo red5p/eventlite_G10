@@ -70,6 +70,13 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		event3.setName("COMP23412 Showcase, group F");
 		event3.setVenue(venue2);
 		eventService.save(event3);
+		
+//		Event event4 = new Event();
+//		event4.setDate(LocalDate.parse("2021-05-10"));
+//		event4.setTime(LocalTime.parse("15:00:00"));
+//		event4.setName("COMP23412 Showcase, group F");
+//		event4.setVenue(venue2);
+//		eventService.save(event4);
 			
 	}
 }
