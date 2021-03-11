@@ -44,7 +44,7 @@ public class EventsController {
 		return "redirect:/events";
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/add", produces = { MediaType.TEXT_HTML_VALUE })
+	/*@RequestMapping(method = RequestMethod.GET, value = "/add", produces = { MediaType.TEXT_HTML_VALUE })
 	public String addPage(Model model) 
 	{
 
@@ -66,11 +66,11 @@ public class EventsController {
 		event.setName(name);
 		event.setDescription(description);
 		
-		/*try {
+		try {
 			event.setVenue(event.findVenue(Long.parseLong(venueId)));
 		} catch (Exception e) {
 			event.setVenue(null);
-		}*/
+		}
 		
 		try {
 			event.setDate(LocalDate.parse(date));
@@ -89,7 +89,7 @@ public class EventsController {
 		return "redirect:/events/" + event.getId();
 	}
 	
-	/*@GetMapping("/events")
+	@GetMapping("/events")
 	public String newEventForm(Model model) {
 		model.addAttribute("add", new Event());
 		return "events/add";
@@ -113,9 +113,9 @@ public class EventsController {
 		redirectAttrs.addFlashAttribute("ok_message", "New event added.");
 
 		return "redirect:/events";
-	}*/
+	}
 	
-	/*@RequestMapping(value = "/add", method = RequestMethod.POST, produces = { MediaType.TEXT_HTML_VALUE })
+	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = { MediaType.TEXT_HTML_VALUE })
 	public String addEvent(@RequestParam("name") String name,
 	                       @RequestParam("description") String description,
 	   	                   @RequestParam("date") LocalDate date,

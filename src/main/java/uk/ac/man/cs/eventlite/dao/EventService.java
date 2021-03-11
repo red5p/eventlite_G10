@@ -12,7 +12,7 @@ public interface EventService {
 
 	public void deleteById(Long id);
 	
-	public void add(Event event);
+	//public void add(Event event);
 	
 }
 
