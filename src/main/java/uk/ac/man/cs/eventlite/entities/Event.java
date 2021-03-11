@@ -35,10 +35,13 @@ public class Event {
     private String name;
 
     //private long venue;
+    
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "venue_id", nullable = false)
     private Venue venue;
+
 
     public Event() {}
 
@@ -93,4 +96,10 @@ public class Event {
     public void setVenue(Venue venue) {
         this.venue = venue;
     }
+
+
+	public void setDescription(String description) {
+		this.description = description;
+		
+	}
 }

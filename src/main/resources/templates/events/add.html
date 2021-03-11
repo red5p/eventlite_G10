@@ -1,0 +1,25 @@
+ <!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+      
+  <head>
+    <title>Add New Event</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    <div layout:fragment="content">
+      <h1>Form</h1>
+      <form action="#" th:action="@{/event}" th:object="${event}" method="post">
+        <p>Event Name: <input type="text" th:field="*{name}" /></p>
+        <p>Date: <input type="text" th:field="*{date}" /></p>
+        <p>Time: <input type="text" th:field="*{time}" /></p>
+        <p>Venue: <input type="text" th:field="*{venue}" /></p>
+        <p>Description: <input type="text" th:field="*{description}" /></p>
+        
+        <p><input type="submit" value="Submit" /> </p>
+      </form>
+      
+    </div>
+  </body>
+</html>

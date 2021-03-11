@@ -29,13 +29,25 @@
           		<button class = "btn btn-danger" type = "submit" th:name = "id" th:value = "${e.id}">
           			Delete Event
           		</button>
-          	</td>
+          	</form>
+          </td>
         </tr>
       </tbody>
     </table>
-
+    
+      <div>
+         <div class="col col-xs-8">
+            <div class="pull-right">
+               <a role="button" class="btn btn-primary" href="/events/add">
+               Add Event
+               </a>
+            </div>
+         </div>
+      </div>
+	
 
   </div>
+
 
 </body>
 </html>
