@@ -30,6 +30,12 @@
           			Delete Event
           		</button>
           	</td>
+          	 <td>
+          	<form th:action = "@{/events/update}">
+          		<button class = "btn btn-info" sec:authorize="isAuthenticated()" type = "submit" th:name = "id" th:value = "${e.id}">
+          			Update Event
+          		</button>
+          	</td>
         </tr>
       </tbody>
     </table>
