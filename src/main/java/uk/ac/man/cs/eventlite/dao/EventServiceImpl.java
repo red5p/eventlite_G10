@@ -1,10 +1,12 @@
 package uk.ac.man.cs.eventlite.dao;
 
 import java.util.ArrayList;
-
+import java.util.List;
+import java.util.Iterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.ac.man.cs.eventlite.entities.Event;
+import uk.ac.man.cs.eventlite.entities.Venue;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -46,22 +48,14 @@ public class EventServiceImpl implements EventService {
 		eventRepository.save(event);
 	}
 
-
 	@Override
 	public void deleteById(Long id) {
 		eventRepository.deleteById(id);		
 	}
 	
 	@Override
-	public Iterable<Event> findByKeyword(String k) {
-		Iterable<Event> events = eventRepository.findAllByOrderByDateAscTimeAsc();
-		ArrayList<Event> result = new ArrayList<Event>();
-		for (Event e:events) {
-			if (e.getName().toLowerCase().contains(k.toLowerCase())) {
-				result.add(e);
-			}
-		}
-		return result;
-
+	public Event getById(Long id) {
+		return eventRepository.findById(id).orElse(null);
 	}
+
 }
