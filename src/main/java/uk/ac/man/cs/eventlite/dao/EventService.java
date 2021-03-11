@@ -12,5 +12,6 @@ public interface EventService {
 
 	public void deleteById(Long id);
 	public Event getById(Long id);
-}
+
+	public Iterable<Event> findByKeyword(String k);}
 

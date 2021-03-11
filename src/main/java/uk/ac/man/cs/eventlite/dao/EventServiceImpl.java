@@ -57,5 +57,17 @@ public class EventServiceImpl implements EventService {
 	public Event getById(Long id) {
 		return eventRepository.findById(id).orElse(null);
 	}
+	
+	@Override
+	public Iterable<Event> findByKeyword(String k) {
+		Iterable<Event> events = eventRepository.findAllByOrderByDateAscTimeAsc();
+		ArrayList<Event> result = new ArrayList<Event>();
+		for (Event e:events) {
+			if (e.getName().toLowerCase().contains(k.toLowerCase())) {
+				result.add(e);
+			}
+		}
+		return result;
 
-}
+
+	}}

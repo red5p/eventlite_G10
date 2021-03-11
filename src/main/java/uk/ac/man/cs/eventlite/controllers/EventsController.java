@@ -30,5 +30,15 @@ public class EventsController {
 		eventService.deleteById(id);
 		return "redirect:/events"; 
 	}	
+	
+	@GetMapping("/search")
+	public String getTest(@RequestParam(value="eventSearch") String keyword,  Model model) {
+		model.addAttribute("events", eventService.findByKeyword(keyword));
+		return "events/index";
+	}
+
 
 }
+
+
+
