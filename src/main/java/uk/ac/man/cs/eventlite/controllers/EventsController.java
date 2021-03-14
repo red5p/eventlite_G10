@@ -3,6 +3,10 @@ package uk.ac.man.cs.eventlite.controllers;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -18,11 +22,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import uk.ac.man.cs.eventlite.dao.EventService;
 import uk.ac.man.cs.eventlite.dao.VenueService;
 import uk.ac.man.cs.eventlite.entities.Event;
+import uk.ac.man.cs.eventlite.entities.Venue;
 
 @Controller
 @RequestMapping(value = "/events", produces = { MediaType.TEXT_HTML_VALUE })
@@ -30,6 +36,9 @@ public class EventsController {
 	
 	@Autowired
 	private EventService eventService;
+
+	@Autowired
+	private VenueService venueService;
 
 	@GetMapping
 	public String getAllEvents(Model model) {
@@ -44,6 +53,62 @@ public class EventsController {
 		return "redirect:/events";
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/add", produces = { MediaType.TEXT_HTML_VALUE })
+	public String addPage(Model model) 
+	{
+		model.addAttribute("venues", venueService.findAll());
+
+		return "events/add_form";
+	} // addPage
+	
+//    @GetMapping("/add")
+//    public String showForm(Model model) {
+//        Event event = new Event();
+//        model.addAttribute("event", event);
+//         
+//        Iterable<Venue> venues = venueService.findAll();
+//		model.addAttribute("venues", venues);
+//         
+//        return "add_form";
+//    }
+
+	
+
+//	@RequestMapping(method = RequestMethod.GET, value = "/add", produces = { MediaType.TEXT_HTML_VALUE })
+//	public String addPage(Model model) 
+//	{
+//		Event event = new Event();
+//		model.addAttribute("event", event);
+//		
+//		Iterable<Venue> venues = venueService.findAll();
+//		model.addAttribute("venues", venues);
+//		
+//		return "events/add_form";
+//	}
+
+/*
+	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = { MediaType.TEXT_HTML_VALUE })
+	public String addEvent(@RequestParam("name") String name,
+	   	                   //@RequestParam("date") LocalDate date,
+		                   //@RequestParam("time") LocalTime time,
+		                   //@RequestParam("venue") Venue venue,
+	                       @RequestParam("description") String description,
+		                   Model model) throws Exception
+	{
+		
+		Event event = new Event();
+		event.setName(name);
+		//event.setDate(date);
+		//event.setTime(time);
+		//event.setVenue(venue);
+		event.setDescription(description);	
+		
+		eventService.save(event);
+
+		return "redirect:/events";
+	}
+*/
+	
 	/*@RequestMapping(method = RequestMethod.GET, value = "/add", produces = { MediaType.TEXT_HTML_VALUE })
 	public String addPage(Model model) 
 	{

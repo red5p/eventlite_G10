@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default}">
+	<head>
+  		<title>New Event</title>
+	</head>
+	<body>
+		<div layout:fragment="content">
+			<h1>Add a new event</h1>
+			
+			<form class="form-horizontal" method = "post" action="/events/add">
+			
+				<!-- EVENT NAME -->
+				<div class="form-group">
+					<label class="control-label col-sm-3" for="name">Name:</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" name="name" placeholder="Please enter the name of event">
+					</div>
+				</div>
+	           
+	               
+				<!-- EVENT DATE -->
+				<div class="form-group">
+					<label class="control-label col-sm-3" for="date">Date:</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" name="date" placeholder="YYYY-MM-DD">
+					</div>
+				</div>
+	            
+				<!-- EVENT TIME -->
+				<div class="form-group">
+					<label class="control-label col-sm-3" for="time">Time:</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" name="time" placeholder="HH:MM">
+					</div>
+				</div>
+	            
+				<!-- EVENT VENUE -->
+				<div class = "form-group">
+					<label class = "control-label col-sm-3" for = "venue">Venue</label>
+					<div class = "col-sm-6">
+						<select th:field = "*{venues}">
+							<option th:each = "v : ${venues}" th:value = "${v.id}" th:text = "${v.name}" />
+						</select>
+					</div>
+				</div>
+				
+				<!-- EVENT DESCRIPTION -->
+				<div class = "form-group">
+					<label class = "control-lavel col-sm-3" for = "description">Description</label>
+					<div class = "col-sm-6">
+						<textarea id="note" name="note">
+							<span th:text="*{note}" th:remove="tag"></span>
+						</textarea>
+					</div>
+				</div>
+				
+				<button class="btn btn-primary" type="submit">Save</button>
+				
+			</form>
+ 
+		</div>
+	</body>
+</html>
+    
