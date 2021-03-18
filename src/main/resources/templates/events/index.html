@@ -36,6 +36,7 @@
     </table>
     
 
+	<!-- THIS IS THE ONE THAT WORKS
 	<div sec:authorize="isAuthenticated()">
 		<div class="col col-xs-8">
 			<div class="pull-right">
@@ -44,11 +45,19 @@
 				</a>
 			</div>
 		</div>
-	</div>      
+	</div> -->   
 	  
 	  <!--<a class="btn btn-primary" role="button" th:href="@{/add}">
 	    <i class="fas fa-plus" aria-hidden="true"></i> Add Event
 	  </a>-->
+	  
+	<div sec:authorize="isAuthenticated()">
+		<p>
+			<a class = "btn btn-primary" role = "button" href="/events/new">
+			New Event
+			</a>
+		</p>
+	</div>
 	
 
   </div>

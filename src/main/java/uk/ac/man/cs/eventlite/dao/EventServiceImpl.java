@@ -32,9 +32,4 @@ public class EventServiceImpl implements EventService {
 	}	
 	
 	
-	//@Override
-	//public void add(Event event) {
-		//eventRepository.save(event);
-	//}
-	
 }

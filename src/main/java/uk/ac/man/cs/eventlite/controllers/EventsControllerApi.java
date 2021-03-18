@@ -59,6 +59,23 @@ public class EventsControllerApi {
 		eventService.deleteById(id);
 	}
 	
+	@GetMapping("/new")
+	public ResponseEntity<?> newEvent(){
+		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+	}
+	
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> createEvent(@RequestBody @Valid Event event, BindingResult result){
+		if(result.hasErrors()) {
+			return ResponseEntity.unprocessableEntity().build();
+		}
+		
+		eventService.save(event);
+		URI location = linkTo(EventsControllerApi.class).slash(event.getId()).toUri();
+		
+		return ResponseEntity.created(location).build();
+	}
+
 	
 	/*@GetMapping("/events")
 	public ResponseEntity<?> newEventForm() {

@@ -33,10 +33,8 @@ public class Event {
     private LocalTime time;
 
     private String name;
-
-    //private long venue;
     
-    private String description;
+    //private String description;
 
     @ManyToOne
     @JoinColumn(name = "venue_id", nullable = false)
@@ -98,7 +96,4 @@ public class Event {
     }
 
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
 }
