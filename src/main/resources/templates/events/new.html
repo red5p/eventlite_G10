@@ -33,7 +33,7 @@
 				<div class = "col-sm-6 form-group">
 					<label>Event Venue</label>
 					<select th:field = "*{venue}">
-						<option th:each = "v : ${venues}" th:value = "${v}" th:text = "${v.name}"></option>
+						<option th:each = "v : ${venues}" th:value = "${v.id}" th:text = "${v.name}"></option>
 					</select>
 				</div>
 				

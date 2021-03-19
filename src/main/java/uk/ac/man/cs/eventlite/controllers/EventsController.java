@@ -58,8 +58,9 @@ public class EventsController {
 			Model model, RedirectAttributes redirectAttrs){
 		
 		if(errors.hasErrors()) {
+			System.out.println(errors);
 			model.addAttribute("events", event);
-			model.addAttribute("venue", venueService.findAll());
+			model.addAttribute("venues", venueService.findAll());
 			
 			return "events/new";
 		}
