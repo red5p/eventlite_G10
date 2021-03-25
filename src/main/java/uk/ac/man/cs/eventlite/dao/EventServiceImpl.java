@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Iterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import ch.qos.logback.classic.Logger;
 import uk.ac.man.cs.eventlite.entities.Event;
 
 @Service
@@ -50,5 +52,12 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public void deleteById(Long id) {
 		eventRepository.deleteById(id);		
+	}
+
+	@Override
+	public Event findOne(long id) {
+		// TODO Auto-generated method stub
+		return eventRepository.findById(id).orElse(null);
+		
 	}
 }

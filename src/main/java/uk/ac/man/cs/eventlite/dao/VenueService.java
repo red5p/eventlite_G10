@@ -7,6 +7,6 @@ public interface VenueService {
 	public long count();
 
 	public Iterable<Venue> findAll();
-
+	
 	void save(Venue venue);
 }

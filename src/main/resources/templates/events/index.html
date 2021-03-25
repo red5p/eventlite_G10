@@ -24,18 +24,23 @@
           <td th:text="${e.venue.name}">Event venue</td>
           <td th:text="${{e.date}}">Event date</td>
           <td th:text="${{e.time}}">Event time</td>
+          
           <td>
           	<form th:action = "@{/events/delete}">
           		<button class = "btn btn-danger" type = "submit" th:name = "id" th:value = "${e.id}">
           			Delete Event
           		</button>
+          		</form>
           	</td>
-          	 <td>
-          	<form th:action = "@{/events/update}">
-          		<button class = "btn btn-info" sec:authorize="isAuthenticated()" type = "submit" th:name = "id" th:value = "${e.id}">
-          			Update Event
-          		</button>
+          	
+          <td>
+          	<form th:action = "@{/update/{id}(id=${e.id})}" th:method="get">
+          		<button class = "btn btn-primary" type = "submit" th:value = "${e.id}"><i class="fas fa-plus" aria-hidden="true"></i>
+          			Update Event 
+          		</button> 
+          		</form>
           	</td>
+          	
         </tr>
       </tbody>
     </table>
