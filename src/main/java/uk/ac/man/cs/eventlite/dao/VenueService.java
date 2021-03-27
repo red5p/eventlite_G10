@@ -9,4 +9,7 @@ public interface VenueService {
 	public Iterable<Venue> findAll();
 
 	void save(Venue venue);
-}
+
+	public Venue getById(Long id);
+
+	public void deleteById(Long id);}
