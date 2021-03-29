@@ -96,6 +96,7 @@ public class Event {
         this.venue = venue;
     }
     
+
     public void setDescription(String description) {
     	this.description = description;
     }
@@ -105,4 +106,20 @@ public class Event {
     }
 
 
+    public boolean isPast() {
+    	if(date == null) {
+    		return false;
+    	}
+    	LocalDate someDate = LocalDate.now();
+    	return date.isBefore(someDate);
+    }
+    
+    public boolean isFuture() {
+    	if(date == null) {
+    		return false;
+    	}
+    	LocalDate someDate = LocalDate.now();
+    	return !date.isBefore(someDate);
+    }
+    
 }

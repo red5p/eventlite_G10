@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -31,15 +34,22 @@ public class EventsController {
 
 	@GetMapping
 	public String getAllEvents(Model model) {
-		model.addAttribute("events", eventService.findAll());
+		model.addAttribute("event", eventService.findAll());
+		model.addAttribute("upcomingevents", eventService.findUpcomingEvents());
+		model.addAttribute("pastevents", eventService.findPastEvents());
 		return "events/index";
 	}
 	
-	@RequestMapping("/delete")
-	public String deleteEvent(@RequestParam(value = "id", required = true) Model model, long id)
-	{
+	@DeleteMapping("/{id}")
+	public String delete(@PathVariable("id") long id) {
 		eventService.deleteById(id);
-		return "redirect:/events";
+		return "redirect:/events"; 
+	}	
+	
+	@GetMapping("/search")
+	public String getTest(@RequestParam(value="eventSearch") String keyword,  Model model) {
+		model.addAttribute("events", eventService.findByKeyword(keyword));
+		return "events/index";
 	}
 	
 	@GetMapping("/new")
@@ -233,5 +243,8 @@ public class EventsController {
 	}*/
 
 
+
 }
+
+
 

@@ -7,6 +7,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.handler;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 import java.util.Collections;
 
@@ -26,6 +29,7 @@ import uk.ac.man.cs.eventlite.dao.EventService;
 import uk.ac.man.cs.eventlite.dao.VenueService;
 import uk.ac.man.cs.eventlite.entities.Event;
 import uk.ac.man.cs.eventlite.entities.Venue;
+
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(EventsController.class)
@@ -73,4 +77,19 @@ public class EventsControllerTest {
 
 		verify(eventService).findAll();
 	}
+	
+	
+	@Test
+	public void deleteAnEvent() throws Exception {
+		long id = 1;
+
+		when(eventService.getById(id)).thenReturn(event);
+		mvc.perform(delete("/events/1").with(user("Rob").roles(Security.ADMIN_ROLE)).accept(MediaType.TEXT_HTML).with(csrf())).andExpect(view().name("redirect:/events")).andExpect(status().isFound());
+                
 }
+
+
+
+	
+	}
+

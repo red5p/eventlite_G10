@@ -4,10 +4,14 @@ import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.handler;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -26,6 +30,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import uk.ac.man.cs.eventlite.config.Security;
 import uk.ac.man.cs.eventlite.dao.EventService;
 import uk.ac.man.cs.eventlite.entities.Event;
+import uk.ac.man.cs.eventlite.entities.Venue;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(EventsControllerApi.class)
@@ -65,5 +70,22 @@ public class EventsControllerApiTest {
 				.andExpect(jsonPath("$._embedded.events.length()", equalTo(1)));
 
 		verify(eventService).findAll();
+	}
+	
+	@Test
+	public void deleteAnEvent() throws Exception {
+		long id = 1;
+		Event event = new Event();
+		Venue venue = new Venue();
+		event.setId(1);
+		event.setName("Event");
+		event.setDate(LocalDate.now());
+		event.setTime(LocalTime.now());
+		event.setVenue(venue);
+		
+		when(eventService.getById(id)).thenReturn(event);
+
+		mvc.perform(delete("/api/events/1").with(user("Rob").roles(Security.ADMIN_ROLE)).accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNoContent());
+;
 	}
 }
