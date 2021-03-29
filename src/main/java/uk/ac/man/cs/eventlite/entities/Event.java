@@ -93,4 +93,21 @@ public class Event {
     public void setVenue(Venue venue) {
         this.venue = venue;
     }
+    
+    public boolean isPast() {
+    	if(date == null) {
+    		return false;
+    	}
+    	LocalDate someDate = LocalDate.now();
+    	return date.isBefore(someDate);
+    }
+    
+    public boolean isFuture() {
+    	if(date == null) {
+    		return false;
+    	}
+    	LocalDate someDate = LocalDate.now();
+    	return !date.isBefore(someDate);
+    }
+    
 }

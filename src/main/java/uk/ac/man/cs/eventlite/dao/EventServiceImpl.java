@@ -3,7 +3,11 @@ package uk.ac.man.cs.eventlite.dao;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import uk.ac.man.cs.eventlite.entities.Event;
 import uk.ac.man.cs.eventlite.entities.Venue;
@@ -21,27 +25,13 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public Iterable<Event> findAll() {
-//		return eventRepository.findAllByOrderByDateAsc();
-		return eventRepository.findAllByOrderByDateAscTimeAsc();
-		
-//		Iterable<Event> events = eventRepository.findAll();
-//		Iterator<Event> I = events.iterator();
-//		List<Event> arr = new ArrayList<Event>();
-//		while(I.hasNext()) {
-//			arr.add(I.next());
-//		}
-//		
-//		arr.sort((a1,a2) -> {
-//			if(a1.getDate().equals(a2.getDate())) {
-//				return a1.getTime().compareTo(a2.getTime());
-//			}else{
-//				return a1.getDate().compareTo(a2.getDate());
-//			}
-//		});
-//		
-//		return arr;
+		return eventRepository.findAll();
 	}
 	
+	@Override
+	public Iterable<Event> findAllByOrderByDateAscTimeAsc() {
+		return eventRepository.findAllByOrderByDateAscTimeAsc();
+	}
 	
 	@Override
 	public void save(Event event) {
@@ -70,4 +60,49 @@ public class EventServiceImpl implements EventService {
 		return result;
 
 
-	}}
+	}
+	
+	@Override
+	public List<Event> findUpcomingEvents() {
+		List<Event> upcomingEvents = new ArrayList<Event>();
+		Iterable<Event> events = eventRepository.findAll();
+		for (Event e:events) {
+			if (e.isFuture()) {
+				upcomingEvents.add(e);
+			}
+		}
+		
+		upcomingEvents.sort((a1,a2) -> {
+			if(a1.getDate().equals(a2.getDate())) {
+				return a1.getName().compareTo(a2.getName());
+			}else{
+				return a1.getDate().compareTo(a2.getDate());
+			}
+		});
+
+		return upcomingEvents;
+	} // findUpcomingEvents
+
+
+	@Override
+	public List<Event> findPastEvents() {
+		List<Event> pastEvents = new ArrayList<Event>();
+		Iterable<Event> events = eventRepository.findAll();
+		for (Event e:events) {
+			if (e.isPast()) {
+				pastEvents.add(e);
+			}
+		}
+		
+		pastEvents.sort((a1,a2) -> {
+			if(a1.getDate().equals(a2.getDate())) {
+				return a1.getName().compareTo(a2.getName());
+			}else{
+				return a2.getDate().compareTo(a1.getDate());
+			}
+		});
+		
+		return pastEvents;
+
+	}
+}
