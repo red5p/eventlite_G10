@@ -54,11 +54,9 @@ public class EventsControllerApi {
 		return CollectionModel.of(events, selfLink);
 	}
 	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable("id") long id) {
+	@DeleteMapping("/delete/{id}")
+	public void deleteEvent(@PathVariable Long id) {
 		eventService.deleteById(id);
-		return ResponseEntity.noContent().build();
-
 	}
 	
 	@GetMapping("/new")

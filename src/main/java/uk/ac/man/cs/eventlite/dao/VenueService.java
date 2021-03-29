@@ -12,10 +12,4 @@ public interface VenueService {
 
 	void save(Venue venue);
 
-
 }
-
-	public Venue getById(Long id);
-
-	public void deleteById(Long id);}
-
