@@ -34,7 +34,7 @@ public class Event {
 
     private String name;
     
-    //private String description;
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "venue_id", nullable = false)
@@ -44,11 +44,12 @@ public class Event {
     public Event() {}
 
 
-    public Event(Venue venue, String name, LocalDate localdate, LocalTime localtime) {
+    public Event(Venue venue, String name, LocalDate localdate, LocalTime localtime, String description) {
         this.venue = venue;
         this.name = name;
         this.date = localdate;
         this.time = localtime;
+        this.description = description;
 
     }
 
@@ -93,6 +94,14 @@ public class Event {
 
     public void setVenue(Venue venue) {
         this.venue = venue;
+    }
+    
+    public void setDescription(String description) {
+    	this.description = description;
+    }
+    
+    public String getDescription() {
+    	return description;
     }
 
 

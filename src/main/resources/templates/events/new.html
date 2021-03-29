@@ -36,8 +36,15 @@
 						<option th:each = "v : ${venues}" th:value = "${v.id}" th:text = "${v.name}"></option>
 					</select>
 				</div>
+
+				<!-- EVENT DESCRIPTION -->
+				<div class = "col-sm-6 form-group">
+					<label>Event Description</label>
+					<textarea row = "5" cols = "25" th:field = "*{description}"></textarea>				
+				</div>
 				
 				<button class = "btn btn-primary" type = "submit">Save</button>
+				<a class = "btn btn-danger" role = "button" href = "/events">Cancel</a>
 				
 			</form>
  
