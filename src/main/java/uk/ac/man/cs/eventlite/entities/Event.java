@@ -33,21 +33,23 @@ public class Event {
     private LocalTime time;
 
     private String name;
-
-    //private long venue;
+    
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "venue_id", nullable = false)
     private Venue venue;
 
+
     public Event() {}
 
 
-    public Event(Venue venue, String name, LocalDate localdate, LocalTime localtime) {
+    public Event(Venue venue, String name, LocalDate localdate, LocalTime localtime, String description) {
         this.venue = venue;
         this.name = name;
         this.date = localdate;
         this.time = localtime;
+        this.description = description;
 
     }
 
@@ -94,20 +96,13 @@ public class Event {
         this.venue = venue;
     }
     
-    public boolean isPast() {
-    	if(date == null) {
-    		return false;
-    	}
-    	LocalDate someDate = LocalDate.now();
-    	return date.isBefore(someDate);
+    public void setDescription(String description) {
+    	this.description = description;
     }
     
-    public boolean isFuture() {
-    	if(date == null) {
-    		return false;
-    	}
-    	LocalDate someDate = LocalDate.now();
-    	return !date.isBefore(someDate);
+    public String getDescription() {
+    	return description;
     }
-    
+
+
 }

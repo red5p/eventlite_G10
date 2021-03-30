@@ -1,6 +1,8 @@
 package uk.ac.man.cs.eventlite.dao;
 
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.ac.man.cs.eventlite.entities.Venue;
@@ -25,19 +27,4 @@ public class VenueServiceImpl implements VenueService {
 		venueRepository.save(venue);
 	}
 
-
-
-	@Override
-	public Venue getById(Long id) {
-		return venueRepository.findById(id).orElse(null);
-
-	}
-
-	@Override
-	public void deleteById(Long id) {
-		venueRepository.deleteById(id);			
-	}
-
-
-	
 }
