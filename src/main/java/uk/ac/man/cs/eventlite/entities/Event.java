@@ -5,7 +5,8 @@ import java.time.LocalTime;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Past;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,6 +27,7 @@ public class Event {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Past(message = "Please input a future date")
     private LocalDate date;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
