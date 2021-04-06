@@ -16,6 +16,8 @@
           <th><i class="fas fa-map-marker-alt"></i> Venue</th>
           <th><i class="fas fa-calendar"></i> Date</th>
           <th><i class="fas fa-clock"></i> Time</th>
+          <th><i class="fas fa-trash"></i> Delete</th>
+          <th><i class="fas fa-edit"></i> Update</th>
         </tr>
       </thead>
       <tbody>
@@ -34,11 +36,13 @@
           	</td>
           	
           <td>
-          	<form th:action = "@{/update/{id}(id=${e.id})}" th:method="get">
-          		<button class = "btn btn-primary" type = "submit" th:value = "${e.id}"><i class="fas fa-plus" aria-hidden="true"></i>
+          <div sec:authorize="isAuthenticated()">
+          	<form th:action = "@{/events/update/{id}(id=${e.id})}" th:method="get">
+          		<button class = "btn btn-primary" type = "submit" th:value = "${e.id}"><i class="fas fa-edit"></i>
           			Update Event 
           		</button> 
           		</form>
+          	</div>
           	</td>
           	
         </tr>

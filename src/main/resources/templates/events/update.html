@@ -6,35 +6,45 @@
   <title>Update an event</title>
 </head>
 <body>
-    <form action="#" th:action="@{/update/{id}(id=${id})}" th:object="${event}" method="post">
-    <table>
-    	<tr>
-    		<td><label>Name</label></td>
-    		<td><input type="text" name="name" th:value="*{name}" /></td>
-    	</tr>
-    	<tr>/{id}(id=${id})
-    		<td><label>Venue</label></td>
-    		<td><select th:field="*{venue}">
-    			<option th:each="venue : ${all_venues}" th:value="${venue.id}" th:text="${{venue.name}} >/option> 
-    			</select></td>
-    	</tr>
-    	<tr>
-    		<td><label>Date</label></td>
-    		<td><input type="text" name="date" th:value="*{date}" /></td>
-    	</tr>
-    	<tr>
-    		<td><label>Time</label></td>
-    		<td><input type="text" name="time" th:value="*{time}" /></td>
-    	</tr>
-    	<tr>
-    		<td>
-    		</td>
-    		<td>
-    		<button type="submit" th:value="saveUpdate" name="action" class = "btn btn-primary">
-    		<i class="fas fa-plus" aria-hidden="true"></i>Update</button>
-    		</td>
-    	</tr>	
-    </table>
-    </form>
+    <div layout:fragment="content">
+			<h1>Edit event</h1>
+			
+			<form action="#" method="post" th:action="@{'/events/update/' + ${event.id}}" th:object="${event}">
+				
+				<input type="hidden" placeholder="id" name="id" th:value="${event.id}">
+				
+				<!-- EVENT NAME -->
+				<div class="col-sm-6 form-group">
+					<label>Event Name</title>
+					<input type = "text" class = "form-control" name="name" th:value="${event.name}">
+				</div>
+	           
+	               
+				<!-- EVENT DATE -->
+				<div class="col-sm-6 form-group">
+					<label>Event Date</title>
+					<input type = "date" class = "form-control" name="date" th:value="${event.date}">
+				</div>
+	            
+				<!-- EVENT TIME -->
+				<div class="col-sm-6 form-group">
+					<label>Event Time</title>
+					<input type = "time" class = "form-control" name="time" th:value="${event.time}">
+				</div>
+	            
+				<!-- EVENT VENUE -->
+				<div class = "col-sm-6 form-group">
+					<label>Event Venue</label>
+					<select th:field = "*{venue}">
+						<option th:each = "v : ${venues}" th:value = "${v.id}" th:text = "${v.name}" th:selected="${v == event.venue}"></option>
+					</select>
+				</div>
+				
+				<button class = "btn btn-primary" type = "submit">Save</button>
+				<a class = "btn btn-danger" role = "button" href = "/events">Cancel</a>
+				
+			</form>
+ 
+		</div>
 </body>
 </html>

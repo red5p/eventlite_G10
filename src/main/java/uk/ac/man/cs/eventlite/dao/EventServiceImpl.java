@@ -1,12 +1,8 @@
 package uk.ac.man.cs.eventlite.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import ch.qos.logback.classic.Logger;
 import uk.ac.man.cs.eventlite.entities.Event;
 
 @Service
