@@ -17,7 +17,6 @@ public class VenueServiceImpl implements VenueService {
 		return venueRepository.count();
 	}
 
-	@Override
 	public Iterable<Venue> findAll() {
 		return venueRepository.findAll();
 	}
