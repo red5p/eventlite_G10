@@ -1,6 +1,9 @@
 package uk.ac.man.cs.eventlite.dao;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +36,51 @@ public class EventServiceImpl implements EventService {
 
 	}	
 	
+	@Override
+	public List<Event> findUpcomingEvents() {
+		List<Event> upcomingEvents = new ArrayList<Event>();
+		Iterable<Event> events = eventRepository.findAll();
+		for (Event e:events) {
+			if (e.isFuture()) {
+				upcomingEvents.add(e);
+			}
+		}
+		
+		upcomingEvents.sort((a1,a2) -> {
+			if(a1.getDate().equals(a2.getDate())) {
+				return a1.getName().compareTo(a2.getName());
+			}else{
+				return a1.getDate().compareTo(a2.getDate());
+			}
+		});
+
+		return upcomingEvents;
+	} // findUpcomingEvents
+
+
+	@Override
+	public List<Event> findPastEvents() {
+		List<Event> pastEvents = new ArrayList<Event>();
+		Iterable<Event> events = eventRepository.findAll();
+		for (Event e:events) {
+			if (e.isPast()) {
+				pastEvents.add(e);
+			}
+		}
+		
+		pastEvents.sort((a1,a2) -> {
+			if(a1.getDate().equals(a2.getDate())) {
+				return a1.getName().compareTo(a2.getName());
+			}else{
+				return a2.getDate().compareTo(a1.getDate());
+			}
+		});
+		
+		return pastEvents;
+
+	}
 
 	
-
 	@Override
 	public Event findOne(long id) {
 		// TODO Auto-generated method stub
