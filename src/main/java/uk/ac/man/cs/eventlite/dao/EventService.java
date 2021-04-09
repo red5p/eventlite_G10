@@ -1,6 +1,8 @@
 package uk.ac.man.cs.eventlite.dao;
 
 
+import java.util.List;
+
 import uk.ac.man.cs.eventlite.entities.Event;
 
 public interface EventService {
@@ -14,6 +16,10 @@ public interface EventService {
 	public void deleteById(Long id);
 
 	public Event findOne(long id);
+
+	List<Event> findUpcomingEvents();
+
+	List<Event> findPastEvents();
 
 }
 

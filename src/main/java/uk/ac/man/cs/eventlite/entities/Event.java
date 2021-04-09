@@ -103,6 +103,23 @@ public class Event {
     public String getDescription() {
     	return description;
     }
+    
+    public boolean isPast() {
+    	if(date == null) {
+    		return false;
+    	}
+    	LocalDate someDate = LocalDate.now();
+    	return date.isBefore(someDate);
+    }
+    
+    public boolean isFuture() {
+    	if(date == null) {
+    		return false;
+    	}
+    	LocalDate someDate = LocalDate.now();
+    	return !date.isBefore(someDate);
+    }
+
 
 
 }

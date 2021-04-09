@@ -42,6 +42,8 @@ public class EventsController {
 	@GetMapping
 	public String getAllEvents(Model model) {
 		model.addAttribute("events", eventService.findAll());
+		model.addAttribute("upcomingevents", eventService.findUpcomingEvents());
+		model.addAttribute("pastevents", eventService.findPastEvents());
 		return "events/index";
 	}
 	
