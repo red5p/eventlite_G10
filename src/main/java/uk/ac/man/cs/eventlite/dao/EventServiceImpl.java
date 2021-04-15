@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import uk.ac.man.cs.eventlite.entities.Event;
+import uk.ac.man.cs.eventlite.entities.Venue;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -86,6 +87,11 @@ public class EventServiceImpl implements EventService {
 		// TODO Auto-generated method stub
 		return eventRepository.findById(id).orElse(null);
 		
+	}
+	
+	@Override
+	public Iterable<Event> findByNameContainingIgnoreCase(String keyword) {
+		return eventRepository.findByNameContainingIgnoreCase(keyword);
 	}
 
 }

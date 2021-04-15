@@ -117,6 +117,11 @@ public class EventsController {
 		return "redirect:/events";
 	}
 
+	@GetMapping("/search")
+	public String getTest(@RequestParam(value="eventSearch") String keyword,  Model model) {
+		model.addAttribute("events", eventService.findByNameContainingIgnoreCase(keyword));
+		return "events/index";
+	}
 
 
 

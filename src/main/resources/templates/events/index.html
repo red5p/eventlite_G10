@@ -78,6 +78,7 @@
           <td>
           	<form th:action = "@{/events/delete}">
           		<button class = "btn btn-danger" type = "submit" th:name = "id" th:value = "${e.id}">
+          		<i class="fas fa-trash" aria-hidden="true"></i>
           			Delete Event
           		</button>
 
