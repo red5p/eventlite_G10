@@ -90,7 +90,7 @@ public class EventServiceImpl implements EventService {
 	}
 	
 	@Override
-	public Iterable<Event> findByNameContainingIgnoreCase(String keyword) {
+	public Iterable<Event> findEventsByName(String keyword) {
 		return eventRepository.findByNameContainingIgnoreCase(keyword);
 	}
 

@@ -22,7 +22,7 @@ public interface EventService {
 
 	List<Event> findPastEvents();
 	
-	public Iterable<Event> findByNameContainingIgnoreCase(String keyword);
+	public Iterable<Event> findEventsByName(String keyword);
 
 }
 
