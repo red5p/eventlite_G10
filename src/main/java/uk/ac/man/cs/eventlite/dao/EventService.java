@@ -22,8 +22,6 @@ public interface EventService {
 
 	List<Event> findPastEvents();
 	
-//	public Iterable<Event> findEventsByName(String keyword);
-	
 	public Iterable<Event> findPastEventsByName(String keyword);
 	
 	public Iterable<Event> findUpcomingEventsByName(String keyword);

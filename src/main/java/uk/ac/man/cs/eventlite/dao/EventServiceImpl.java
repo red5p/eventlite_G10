@@ -88,11 +88,6 @@ public class EventServiceImpl implements EventService {
 		return eventRepository.findById(id).orElse(null);
 		
 	}
-//	
-//	@Override
-//	public Iterable<Event> findEventsByName(String keyword) {
-//		return eventRepository.findByNameContainingIgnoreCase(keyword);
-//	}
 	
 	@Override	
 	public Iterable<Event> findPastEventsByName(String keyword) {

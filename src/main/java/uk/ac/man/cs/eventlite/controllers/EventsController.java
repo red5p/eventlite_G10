@@ -122,8 +122,6 @@ public class EventsController {
 	
 	@RequestMapping(value = "/")
 	public String findEventsByName(@RequestParam(value="keyword") String keyword, Model model) {
-//		Iterable<Event> allEvents = eventService.findEventsByName(keyword);
-//		
 		Iterable<Event> upcomingEvents = eventService.findUpcomingEventsByName(keyword);
 		Iterable<Event> pastEvents = eventService.findPastEventsByName(keyword);
 		

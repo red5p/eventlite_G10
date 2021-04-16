@@ -71,33 +71,33 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		event3.setVenue(venue2);
 		eventService.save(event3);
 		
-		Event event4 = new Event();
-		event4.setDate(LocalDate.parse("2020-05-13"));
-		event4.setTime(LocalTime.parse("16:00:00"));
-		event4.setName("COMP23412 Showcase, group G");
-		event4.setVenue(venue2);
-		eventService.save(event4);
-		
-		Event event5 = new Event();
-		event5.setDate(LocalDate.parse("2020-05-11"));
-		event5.setTime(LocalTime.parse("11:00:00"));
-		event5.setName("COMP23412 Showcase, group D");
-		event5.setVenue(venue1);
-		eventService.save(event5);
-   
-	    Event event6 = new Event();
-		event6.setDate(LocalDate.parse("2020-05-11"));
-		event6.setTime(LocalTime.parse("16:00:00"));
-		event6.setName("COMP23412 Showcase, group A");
-		event6.setVenue(venue2);
-		eventService.save(event6);
-		
-		Event event7 = new Event();
-		event7.setDate(LocalDate.parse("2020-05-11"));
-		event7.setTime(LocalTime.parse("16:00:00"));
-		event7.setName("COMP23412 Showcase, group B");
-		event7.setVenue(venue2);
-		eventService.save(event7);
+//		Event event4 = new Event();
+//		event4.setDate(LocalDate.parse("2020-05-13"));
+//		event4.setTime(LocalTime.parse("16:00:00"));
+//		event4.setName("COMP23412 Showcase, group G");
+//		event4.setVenue(venue2);
+//		eventService.save(event4);
+//		
+//		Event event5 = new Event();
+//		event5.setDate(LocalDate.parse("2020-05-11"));
+//		event5.setTime(LocalTime.parse("11:00:00"));
+//		event5.setName("COMP23412 Showcase, group D");
+//		event5.setVenue(venue1);
+//		eventService.save(event5);
+//   
+//	    Event event6 = new Event();
+//		event6.setDate(LocalDate.parse("2020-05-11"));
+//		event6.setTime(LocalTime.parse("16:00:00"));
+//		event6.setName("COMP23412 Showcase, group A");
+//		event6.setVenue(venue2);
+//		eventService.save(event6);
+//		
+//		Event event7 = new Event();
+//		event7.setDate(LocalDate.parse("2020-05-11"));
+//		event7.setTime(LocalTime.parse("16:00:00"));
+//		event7.setName("COMP23412 Showcase, group B");
+//		event7.setVenue(venue2);
+//		eventService.save(event7);
 
 			
 	}
