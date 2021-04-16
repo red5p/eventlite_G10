@@ -42,7 +42,7 @@ public class Venue {
 	@NotNull(message = "Invalid address")
 	private Double longitude;
 	
-	@Size(max = 300, message="Address name cannot exceed 300 characters" )
+	@Size(max = 299, message="Road name cannot exceed 299 characters" )
 	@NotEmpty(message = "Road name required")
 	private String roadName;
 	
