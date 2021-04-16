@@ -4,6 +4,7 @@ package uk.ac.man.cs.eventlite.dao;
 import java.util.List;
 
 import uk.ac.man.cs.eventlite.entities.Event;
+import uk.ac.man.cs.eventlite.entities.Venue;
 
 public interface EventService {
 
@@ -20,6 +21,10 @@ public interface EventService {
 	List<Event> findUpcomingEvents();
 
 	List<Event> findPastEvents();
+	
+	public Iterable<Event> findPastEventsByName(String keyword);
+	
+	public Iterable<Event> findUpcomingEventsByName(String keyword);
 
 }
 

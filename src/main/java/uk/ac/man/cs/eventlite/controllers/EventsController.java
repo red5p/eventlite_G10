@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.ArrayList;
+
 import javax.validation.Valid;
 
 
@@ -116,8 +119,16 @@ public class EventsController {
 		eventService.save(event);
 		return "redirect:/events";
 	}
-
-
-
-
+	
+	@RequestMapping(value = "/")
+	public String findEventsByName(@RequestParam(value="keyword") String keyword, Model model) {
+		Iterable<Event> upcomingEvents = eventService.findUpcomingEventsByName(keyword);
+		Iterable<Event> pastEvents = eventService.findPastEventsByName(keyword);
+		
+		//model.addAttribute("events", allEvents);
+		model.addAttribute("upcomingevents", upcomingEvents);
+		model.addAttribute("pastevents", pastEvents);
+		
+		return "events/index";
+	}
 }

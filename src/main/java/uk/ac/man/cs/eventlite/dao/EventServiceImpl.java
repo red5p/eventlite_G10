@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import uk.ac.man.cs.eventlite.entities.Event;
+import uk.ac.man.cs.eventlite.entities.Venue;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -86,6 +87,50 @@ public class EventServiceImpl implements EventService {
 		// TODO Auto-generated method stub
 		return eventRepository.findById(id).orElse(null);
 		
+	}
+	
+	@Override	
+	public Iterable<Event> findPastEventsByName(String keyword) {
+		Iterable<Event> allMatchedEvents = eventRepository.findByNameContainingIgnoreCase(keyword);
+		List<Event> pastEvents = new ArrayList<Event>();
+		
+		for (Event e: allMatchedEvents) {
+			if (e.isPast()) {
+				pastEvents.add(e);
+			}
+		}
+		
+		pastEvents.sort((a1,a2) -> {
+			if(a1.getDate().equals(a2.getDate())) {
+				return a1.getName().compareTo(a2.getName());
+			}else{
+				return a2.getDate().compareTo(a1.getDate());
+			}
+		});
+		
+		return pastEvents;
+	}
+	
+	@Override
+	public Iterable<Event> findUpcomingEventsByName(String keyword) {
+		Iterable<Event> allMatchedEvents = eventRepository.findByNameContainingIgnoreCase(keyword);
+		List<Event> upcomingEvents = new ArrayList<Event>();
+		
+		for (Event e:allMatchedEvents) {
+			if (e.isFuture()) {
+				upcomingEvents.add(e);
+			}
+		}
+		
+		upcomingEvents.sort((a1,a2) -> {
+			if(a1.getDate().equals(a2.getDate())) {
+				return a1.getName().compareTo(a2.getName());
+			}else{
+				return a1.getDate().compareTo(a2.getDate());
+			}
+		});
+
+		return upcomingEvents;
 	}
 
 }
