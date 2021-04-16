@@ -122,18 +122,10 @@ public class EventsController {
 	
 	@RequestMapping(value = "/")
 	public String findEventsByName(@RequestParam(value="keyword") String keyword, Model model) {
-		Iterable<Event> allEvents = eventService.findEventsByName(keyword);
-		
-		ArrayList<Event> upcomingEvents = new ArrayList<Event>();
-		ArrayList<Event> pastEvents = new ArrayList<Event>();
-		
-		for(Event e: allEvents) {
-			if(e.isFuture()) {
-				upcomingEvents.add(e);
-			} else {
-				pastEvents.add(e);
-			}
-		}
+//		Iterable<Event> allEvents = eventService.findEventsByName(keyword);
+//		
+		Iterable<Event> upcomingEvents = eventService.findUpcomingEventsByName(keyword);
+		Iterable<Event> pastEvents = eventService.findPastEventsByName(keyword);
 		
 		//model.addAttribute("events", allEvents);
 		model.addAttribute("upcomingevents", upcomingEvents);
