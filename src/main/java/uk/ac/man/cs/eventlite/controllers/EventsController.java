@@ -34,7 +34,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
 import uk.ac.man.cs.eventlite.dao.EventService;
 import uk.ac.man.cs.eventlite.dao.VenueService;
 import uk.ac.man.cs.eventlite.entities.Event;
@@ -130,5 +129,18 @@ public class EventsController {
 		model.addAttribute("pastevents", pastEvents);
 		
 		return "events/index";
+	}
+	
+	@GetMapping("/{id}")
+	public String greeting(@PathVariable("id") long id, Model model) {
+
+		Event event = eventService.findOne(id);
+		model.addAttribute("event", event.getName());
+		model.addAttribute("date", event.getDate());
+		model.addAttribute("time", event.getTime());
+		model.addAttribute("venue", event.getVenue().getName());
+		model.addAttribute("description", event.getDescription());
+		
+		return "events/show";
 	}
 }
