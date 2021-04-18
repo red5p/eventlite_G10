@@ -5,14 +5,12 @@
   <title>A greeting</title>
 </head>
 <body>
-  <div layout:fragment="content">
+  <div layout:fragment="content" style="background-color: #ededed; padding: 60px 25px 60px 25px; margin: 10px">
     <blockquote>
       <h1 th:text="${event}">Event Name</h1>
       <p th:text="${venue}">Venue</p>
-      <p th:text="${date}">Date</p>
-      <p th:text="${time}">Time</p>
+      <p th:text="'At '+${time}+' on '+${#temporals.dayOfWeekName(date)}+', '+${#temporals.day(date)}+' '+${#temporals.monthName(date)}+' '+${#temporals.year(date)}"></p>
       <p th:text="${description}">Description</p>
-      
       
     </blockquote>
       <a class="btn btn-primary" role="button" th:href="@{/events}"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</a>
