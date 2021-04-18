@@ -40,27 +40,42 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		// Build and save initial models here.
 		
 		Venue venue1 = new Venue();
-		Venue venue2 = new Venue();
 		venue1.setCapacity(80);
 		venue1.setId(1);
-		venue1.setName("Kilburn, G23");
+		venue1.setName("Oxford Road");
+		venue1.setRoadName("Oxford Road");
+		venue1.setPostcode("M139PL");
+		venueService.save(venue1);
+		
+		Venue venue2 = new Venue();
 		venue2.setCapacity(10000);
 		venue2.setId(2);
-		venue2.setName("online");
-		venueService.save(venue1);
+		venue2.setName("Rushome Place");
+		venue2.setRoadName("Rusholme Place");
+		venue2.setPostcode("M144AH");
 		venueService.save(venue2);
+		
+		Venue venue3 = new Venue();
+		venue3.setCapacity(250);
+		venue3.setId(3);
+		venue3.setName("great western street");
+		venue3.setRoadName("great western street");
+		venue3.setPostcode("M144AH");
+		venueService.save(venue3);
 
 		Event event1 = new Event();
 		event1.setDate(LocalDate.parse("2021-05-13"));
 		event1.setTime(LocalTime.parse("16:00:00"));
 		event1.setName("COMP23412 Showcase, group G");
-		event1.setVenue(venue2);
+		event1.setDescription("Some description here...");
+		event1.setVenue(venue1);
 		eventService.save(event1);
 		
 		Event event2 = new Event();
 		event2.setDate(LocalDate.parse("2021-05-11"));
 		event2.setTime(LocalTime.parse("11:00:00"));
 		event2.setName("COMP23412 Showcase, group H");
+		event2.setDescription("Some description here...");
 		event2.setVenue(venue2);
 		eventService.save(event2);
    
@@ -68,14 +83,16 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		event3.setDate(LocalDate.parse("2021-05-10"));
 		event3.setTime(LocalTime.parse("16:00:00"));
 		event3.setName("COMP23412 Showcase, group F");
+		event3.setDescription("Some description here...");
 		event3.setVenue(venue2);
 		eventService.save(event3);
 		
 //		Event event4 = new Event();
 //		event4.setDate(LocalDate.parse("2020-05-13"));
 //		event4.setTime(LocalTime.parse("16:00:00"));
-//		event4.setName("COMP23412 Showcase, group G");
-//		event4.setVenue(venue2);
+//		event4.setName("TEST");
+//		event4.setVenue(venue3);
+//		event4.setDescription("Some description here...");
 //		eventService.save(event4);
 //		
 //		Event event5 = new Event();
