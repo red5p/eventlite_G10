@@ -3,18 +3,26 @@
   layout:decorate="~{layouts/default}">
 <head>
   <title>A greeting</title>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js"></script>
+  <style>
+    #info {background-color: #ededed; padding: 60px 25px 60px 25px;margin: 10px; width:100%}
+    #map { width: 30%; }
+  </style>
 </head>
 <body>
-  <div layout:fragment="content" style="background-color: #ededed; padding: 60px 25px 60px 25px; margin: 10px">
-    <blockquote>
-      <h1 th:text="${event}">Event Name</h1>
-      <p th:text="${venue}">Venue</p>
-      <p th:text="'At '+${time}+' on '+${#temporals.dayOfWeekName(date)}+', '+${#temporals.day(date)}+' '+${#temporals.monthName(date)}+' '+${#temporals.year(date)}"></p>
-      <p th:text="${description}">Description</p>
-      
-    </blockquote>
-      <a class="btn btn-primary" role="button" th:href="@{/events}"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</a>
-
+  <div layout:fragment="content">
+    <div id="info">
+      <blockquote>
+        <h1 th:text="${event}">Event Name</h1>
+        <p th:text="${venue}">Venue</p>
+        <p th:text="'At '+${time}+' on '+${#temporals.dayOfWeekName(date)}+', '+${#temporals.day(date)}+' '+${#temporals.monthName(date)}+' '+${#temporals.year(date)}"></p>
+        <p th:text="${description}">Description</p>
+      </blockquote>
+      <a class="btn btn-primary" role="button" th:href="@{/events}"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</a>   
+    </div> 
+    
   </div>
 
 </body>
