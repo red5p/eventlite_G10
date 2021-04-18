@@ -7,9 +7,9 @@
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css" rel="stylesheet">
   <script src="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js"></script>
   <style>
-    div {margin: 10px}
+    div {margin-top: 10px; margin-bottom: 10px}
     #info {background-color: #ededed; padding: 60px 25px 60px 25px}
-    #map {top: 0; bottom: 0; width: 600px; height:400px}
+    #map {top: 0; bottom: 0; width: 100%; height:600px}
   </style>
 </head>
 <body>
@@ -21,21 +21,24 @@
         <p th:text="'At '+${time}+' on '+${#temporals.dayOfWeekName(date)}+', '+${#temporals.day(date)}+' '+${#temporals.monthName(date)}+' '+${#temporals.year(date)}"></p>
         <p th:text="${description}">Description</p>
       </blockquote>
+      
       <a class="btn btn-primary" role="button" th:href="@{/events}"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</a>   
     </div> 
     
     <div id="map"></div>
     <script>
 	  mapboxgl.accessToken = 'pk.eyJ1IjoidzU3NjY0bWsiLCJhIjoiY2tuamhxa2c3MDE4ZjJwbDRjOXltd2FhMiJ9.3VK7Vq1Z6SClt1Ic2SzzQA';
+      var longitude= [[${longitude}]];
+      var latitude = [[${latitude}]];
       var map = new mapboxgl.Map({
                  container: 'map', 
                  style: 'mapbox://styles/mapbox/streets-v11', 
-                 center: [12.550343, 55.665957],
-                 zoom: 8
+                 center: [longitude, latitude],
+                 zoom: 13
              });
-      var marker1 = new mapboxgl.Marker().setLngLat([12.554729, 55.70651]).addTo(map);
- 
+      var marker = new mapboxgl.Marker().setLngLat([longitude, latitude]).addTo(map);
     </script>
+    
   </div>
 </body>
 </html>
