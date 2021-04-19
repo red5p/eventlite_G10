@@ -42,7 +42,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		Venue venue1 = new Venue();
 		venue1.setCapacity(80);
 		venue1.setId(1);
-		venue1.setName("Oxford Road");
+		venue1.setName("Venue A");
 		venue1.setRoadName("Oxford Road");
 		venue1.setPostcode("M139PL");
 		venueService.save(venue1);
@@ -50,7 +50,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		Venue venue2 = new Venue();
 		venue2.setCapacity(10000);
 		venue2.setId(2);
-		venue2.setName("Rushome Place");
+		venue2.setName("Venue C");
 		venue2.setRoadName("Rusholme Place");
 		venue2.setPostcode("M144AH");
 		venueService.save(venue2);
@@ -58,7 +58,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		Venue venue3 = new Venue();
 		venue3.setCapacity(250);
 		venue3.setId(3);
-		venue3.setName("great western street");
+		venue3.setName("Venue B");
 		venue3.setRoadName("great western street");
 		venue3.setPostcode("M144AH");
 		venueService.save(venue3);
