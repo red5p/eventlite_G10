@@ -47,5 +47,14 @@ public class VenuesController {
 		
 		return "venues/details";
 	}
+	
+	@RequestMapping(value = "/")
+	public String findEventsByName(@RequestParam(value="keyword") String keyword, Model model) {
+		Iterable<Venue> venues = venueService.findAllByName(keyword);
+
+		model.addAttribute("venues", venues);
+		
+		return "venues/index";
+	}
 
 }
