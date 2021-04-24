@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/default}">
+<head>
+  <title>Venue Info</title>
+  <style>
+    div {margin-top: 10px; margin-bottom: 10px}
+    #info {background-color: #ededed; padding: 60px 25px 60px 25px}
+  </style>
+</head>
+<body>
+  <div layout:fragment="content">
+    <div id="info">
+      <blockquote>
+        <h1 th:text="${venue.name}">Venue Name</h1>
+        
+      </blockquote>
+      
+      <a class="btn btn-primary" th:onclick="history.back(-1)" style="color:white" type='button'><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</a>   
+    </div> 
+    
+  </div>
+</body>
+</html>
