@@ -13,6 +13,9 @@
     <div id="info">
       <blockquote>
         <h1 th:text="${venue.name}">Venue Name</h1>
+        <p th:text="${venue.roadName}">Road</p>
+        <p th:text="${venue.postcode}">Postcode</p>
+        <p th:text="'Capacity: '+${venue.capacity}">Capacity</p>
         
       </blockquote>
       
