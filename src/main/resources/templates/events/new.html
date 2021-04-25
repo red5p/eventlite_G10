@@ -12,15 +12,15 @@
 			
 				<!-- EVENT NAME -->
 				<div class="col-sm-6 form-group">
-					<label>Event Name</title>
-					<input type = "text" class = "form-control" th:field = "*{name}">
+					<label>Event Name (Max Length: 256)</title>
+					<input type = "text" class = "form-control" th:field = "*{name}" maxlength = "256" th:required = "required">
 				</div>
 	           
 	               
 				<!-- EVENT DATE -->
 				<div class="col-sm-6 form-group">
 					<label>Event Date</title>
-					<input type = "text" class = "form-control" th:field = "*{date}">
+					<input type = "text" class = "form-control" placeholder = "YYYY-MM-DD" th:field = "*{date}" th:required = "required">
 				</div>
 	            
 				<!-- EVENT TIME -->
@@ -32,15 +32,15 @@
 				<!-- EVENT VENUE -->
 				<div class = "col-sm-6 form-group">
 					<label>Event Venue</label>
-					<select th:field = "*{venue}">
+					<select th:field = "*{venue}" th:required = "required">
 						<option th:each = "v : ${venues}" th:value = "${v.id}" th:text = "${v.name}"></option>
 					</select>
 				</div>
 
 				<!-- EVENT DESCRIPTION -->
 				<div class = "col-sm-6 form-group">
-					<label>Event Description</label>
-					<textarea row = "5" cols = "25" th:field = "*{description}"></textarea>				
+					<label>Event Description (Max Length: 500)</label>
+					<textarea row = "5" cols = "25" th:field = "*{description}" maxlength = "500"></textarea>				
 				</div>
 				
 				<button class = "btn btn-primary" type = "submit">Save</button>
