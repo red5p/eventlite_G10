@@ -30,13 +30,22 @@
 	  mapboxgl.accessToken = 'pk.eyJ1IjoidzU3NjY0bWsiLCJhIjoiY2tuamhxa2c3MDE4ZjJwbDRjOXltd2FhMiJ9.3VK7Vq1Z6SClt1Ic2SzzQA';
       var longitude= [[${longitude}]];
       var latitude = [[${latitude}]];
+      var event_time = "${event.time}";
+      var event_name = "${event.name}";
       var map = new mapboxgl.Map({
                  container: 'map', 
                  style: 'mapbox://styles/mapbox/streets-v11', 
                  center: [longitude, latitude],
                  zoom: 13
              });
-      var marker = new mapboxgl.Marker().setLngLat([longitude, latitude]).addTo(map);
+             
+      var marker = new mapboxgl.Marker()
+      .setLngLat([longitude, latitude])
+      .setPopup(new mapboxgl.Popup({offset: 25})
+      .setHTML('<h3>' + event_name + '</h3><p>Start at ' + event_time + '</p>'))
+      .addTo(map);
+      
+  	  
     </script>
     
   </div>
