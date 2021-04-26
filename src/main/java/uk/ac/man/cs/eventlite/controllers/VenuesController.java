@@ -42,26 +42,21 @@ public class VenuesController {
 	private VenueService venueService;
 	
 	@DeleteMapping("/{id}")
-	public String deleteVenueById(@PathVariable("id") long id, RedirectAttributes redirectAttrs,Model model)
-	{
-		Venue v = venueService.findOne(id);
-		Iterable<Event> upcomingEvents = eventService.findUpcomingEventsByName(v.getName());
-		
-		int temp = 0;
-		for(Event e: upcomingEvents) {
-			temp++;
+	public String deleteVenue(@PathVariable("id") long myId, RedirectAttributes RedirectAttributes) {
+		Iterable<uk.ac.man.cs.eventlite.entities.Event> myEvents = eventService.findAll();
+		for (uk.ac.man.cs.eventlite.entities.Event event : myEvents) {
+			if (event.getVenue().getId()==myId) {
+				RedirectAttributes.addFlashAttribute("error_message", "Events associated with venue so cannot be removed.");				
+				return "redirect:/venues";
+			}
 		}
-		if(temp > 0) {
-			model.addAttribute("venue", v);
-			model.addAttribute("upcomingEvents", upcomingEvents);
-			model.addAttribute("error", true);
-			return "venues/venue";
-		}
-
-		venueService.deleteById(id);
-			
+		venueService.deleteById(myId);
+		RedirectAttributes.addFlashAttribute("ok_message", "Venue removed.");
 		return "redirect:/venues";
 	}
+	
+
+
 
 
 	@GetMapping
