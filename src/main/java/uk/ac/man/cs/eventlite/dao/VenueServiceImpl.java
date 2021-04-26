@@ -48,5 +48,12 @@ public class VenueServiceImpl implements VenueService {
 	public Iterable<Venue> findAllByName(String name) {
 		return venueRepository.findByNameContainingIgnoreCaseOrderByNameAsc(name);
 	}
+	
+	@Override
+	public void deleteById(long id)
+	{
+		venueRepository.deleteById(id);
+	}
+
 
 }

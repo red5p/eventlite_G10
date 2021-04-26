@@ -40,6 +40,28 @@ public class VenuesController {
 	
 	@Autowired
 	private VenueService venueService;
+	
+	@DeleteMapping("/{id}")
+	public String deleteVenueById(@PathVariable("id") long id, RedirectAttributes redirectAttrs,Model model)
+	{
+		Venue v = venueService.findOne(id);
+		Iterable<Event> upcomingEvents = eventService.findUpcomingEventsByName(v.getName());
+		
+		int temp = 0;
+		for(Event e: upcomingEvents) {
+			temp++;
+		}
+		if(temp > 0) {
+			model.addAttribute("venue", v);
+			model.addAttribute("upcomingEvents", upcomingEvents);
+			model.addAttribute("error", true);
+			return "venues/venue";
+		}
+
+		venueService.deleteById(id);
+			
+		return "redirect:/venues";
+	}
 
 
 	@GetMapping

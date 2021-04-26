@@ -26,5 +26,6 @@ public interface EventService {
 	
 	public Iterable<Event> findUpcomingEventsByName(String keyword);
 
+
 }
 
