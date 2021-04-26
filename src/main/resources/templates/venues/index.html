@@ -39,6 +39,15 @@
 		         </tr>
 	        </tbody>
     </table>
+    
+	<div sec:authorize="isAuthenticated()">
+		<p>
+			<a class = "btn btn-info" role = "button" href="/venues/new">
+			Add Venue
+			</a>
+		</p>
+	</div>
+	
     </div>
   	
 </body>

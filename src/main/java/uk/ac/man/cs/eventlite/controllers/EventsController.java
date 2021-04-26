@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -68,7 +69,7 @@ public class EventsController {
 			Model model, RedirectAttributes redirectAttrs){
 		
 		if(errors.hasErrors()) {
-			System.out.println(errors);
+			System.out.println(errors + "\n\n\n");
 			model.addAttribute("events", event);
 			model.addAttribute("venues", venueService.findAll());
 			
@@ -89,6 +90,19 @@ public class EventsController {
 		model.addAttribute("events", eventService.findAll());
 		model.addAttribute("upcomingevents", eventService.findUpcomingEvents());
 		model.addAttribute("pastevents", eventService.findPastEvents());
+		
+		List<Double> longitude = new ArrayList<Double>();
+		List<Double> latitude = new ArrayList<Double>();
+				
+		for (Event e:eventService.findUpcomingEvents()) {
+
+			longitude.add(e.getVenue().getLongitude());
+			latitude.add(e.getVenue().getLatitude());
+		}
+
+		model.addAttribute("longitude", longitude);
+		model.addAttribute("latitude", latitude);
+		
 		return "events/index";
 	}
 

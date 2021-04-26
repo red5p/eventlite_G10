@@ -27,7 +27,7 @@ public class Event {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Past(message = "Please input a future date")
+    @Future(message = "Please input a future date")
     private LocalDate date;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)

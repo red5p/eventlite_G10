@@ -27,7 +27,6 @@ public class Venue {
 
 	private long id;
 
-
 	private String name;
 
 	private int capacity;
@@ -64,6 +63,7 @@ public class Venue {
 		this.roadName = roadName;
 		this.postcode = postcode;
 		
+		
 		Pair<Double, Double> point = Geocode.getLatAndLonForAddress(this.roadName + " " + this.postcode);
 		
 		try {
@@ -77,6 +77,7 @@ public class Venue {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
 	}
 	
 	
@@ -87,6 +88,7 @@ public class Venue {
 
 	public void setRoadName(String roadName) {
 		this.roadName = roadName;
+		
 		
 		if (this.latitude == null && this.longitude == null && this.roadName != null && this.postcode != null) {
 			
@@ -102,6 +104,7 @@ public class Venue {
 				e.printStackTrace();
 			}
 		}
+		
 	}
 
 	
@@ -153,8 +156,9 @@ public class Venue {
 	public void setPostcode(String postcode) {
 		this.postcode = postcode;
 		
+		
 		if (this.latitude == null && this.longitude == null && this.roadName != null && this.postcode != null) {
-			
+
 			Pair<Double, Double> point = Geocode.getLatAndLonForAddress(this.roadName + " " + this.postcode);
 			
 			try {
@@ -167,7 +171,9 @@ public class Venue {
 				e.printStackTrace();
 			}
 		}
+		
 	}
 
 
 }
+
