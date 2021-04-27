@@ -16,28 +16,34 @@
 				<!-- EVENT NAME -->
 				<div class="col-sm-6 form-group">
 					<label>Event Name</title>
-					<input type = "text" class = "form-control" name="name" th:value="${event.name}">
+					<input type = "text" class = "form-control" name="name" th:value="${event.name}" maxlength = "256" th:required = "required">
 				</div>
 	           
 	               
 				<!-- EVENT DATE -->
 				<div class="col-sm-6 form-group">
 					<label>Event Date</title>
-					<input type = "date" class = "form-control" name="date" th:value="${event.date}">
+					<input type = "date" class = "form-control" name="date" th:value="${event.date}" th:required = "required">
 				</div>
 	            
 				<!-- EVENT TIME -->
 				<div class="col-sm-6 form-group">
 					<label>Event Time</title>
-					<input type = "time" class = "form-control" name="time" th:value="${event.time}">
+					<input type = "time" class = "form-control" name="time" th:value="${event.time}" >
 				</div>
 	            
 				<!-- EVENT VENUE -->
 				<div class = "col-sm-6 form-group">
 					<label>Event Venue</label>
 					<select th:field = "*{venue}">
-						<option th:each = "v : ${venues}" th:value = "${v.id}" th:text = "${v.name}" th:selected="${v == event.venue}"></option>
+						<option th:each = "v : ${venues}" th:value = "${v.id}" th:text = "${v.name}" th:selected="${v == event.venue}" th:required = "required"></option>
 					</select>
+				</div>
+				
+				<!-- EVENT DESCRIPTION -->
+				<div class = "col-sm-6 form-group">
+				<label>Event Description</label>
+					<textarea row = "5" cols = "25" name="description" th:value="${event.description}" maxlength = "500"></textarea>				
 				</div>
 				
 				<button class = "btn btn-primary" type = "submit">Save</button>
