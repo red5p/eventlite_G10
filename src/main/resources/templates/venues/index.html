@@ -29,6 +29,7 @@
 	          <th><i class="fas fa-calendar"></i> Postcode</th>
 	          <th><i class="fas fa-clock"></i> Capacity</th>
 	          <th><i class="fas fa-clock"></i> Delete</th>
+	          <th><i class="fas fa-edit"></i> Update</th>
 	        </tr>
       	</thead>
       		<tbody>
@@ -37,9 +38,16 @@
 		          <td th:utext="${v.roadName}">Venue Address</td>
 		          <td <b th:utext="${v.postcode}">Venue postcode</td>
 		          <td <b th:utext="'Capacity: ' + ${v.capacity}">Venue Capacity</td>
+		          
 		          <td><form th:action = "@{/venues/{num}(num=${v.id})}" th:method="delete">
 				  <button class="btn btn-danger" type="submit"> <i class="fa fa-trash-alt" aria-hidden="true"></i> Delete </button>
 		  		  </form></td>
+		  		  
+		  		  <td><form th:action = "@{/venues/update_venue/{id}(id=${v.id})}" th:method="get">
+          			<button class = "btn btn-primary" type = "submit" th:value = "${v.id}"><i class="fas fa-edit"></i>
+          			Update Venue 
+          		</button> </form></td>
+          		
 		         </tr>
 	        </tbody>
     </table>

@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+<head>
+  <title>Update a venue</title>
+</head>
+<body>
+    <div layout:fragment="content">
+			<h1>Edit venue</h1>
+			
+			<form action="#" method="post" th:action="@{'/venues/update_venue/' + ${v.id}}" th:object="${venues}">
+				
+				<input type="hidden" placeholder="id" name="id" th:value="${v.id}">
+				
+				<!-- Venue NAME -->
+				<div class="col-sm-6 form-group">
+					<label>Venue Name</title>
+					<input type = "text" class = "form-control" th:field = "*{name}" maxlength = "256" th:required = "required">
+				</div>
+
+	          	               
+				<!-- Venue Capacity -->
+				<div class="col-sm-6 form-group">
+					<label>Venue Capacity</title>
+					<input type = "number" class = "form-control" th:field = "*{capacity}" min = "1" th:required = "required">
+	            </div>
+	            
+				<!-- Address -->
+				<div class="col-sm-6 form-group">
+					<label>AAddress</title>
+					<input type = "text" th:field = "*{address}" maxlength = "300" th:required = "required"></textarea>	
+					</div?
+	           
+				
+				<button class = "btn btn-primary" type = "submit">Save</button>
+				<a class = "btn btn-danger" role = "button" href = "/events">Cancel</a>
+				
+			</form>
+ 
+		</div>
+</body>
+</html>
