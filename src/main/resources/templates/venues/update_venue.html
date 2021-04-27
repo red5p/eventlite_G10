@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default}">
+	<head>
+  		<title>Update Venue</title>
+	</head>
+	<body>
+		<div layout:fragment="content">
+			<h1>Update venue</h1>
+		
+			<form action="#" method="post" th:action="@{'/venues/update_venue/' + ${venue.id}}" th:object="${venue}">
+			
+			<input type="hidden" placeholder="id" name="id" th:value="${venue.id}">
+			
+				<!-- VENUE NAME -->
+				<div class="col-sm-6 form-group">
+					<label>Venue Name</label>
+					<input type = "text" class = "form-control" name="name" th:value = "${venue.name}" maxlength = "256" th:required = "required">
+				</div>
+				
+				<!-- VENUE CAPACITY -->
+				<div class="col-sm-6 form-group">
+					<label>Venue Capacity</title>
+					<input type = "number" class = "form-control" name="capacity" th:value = "${venue.capacity}" min = "1" th:required = "required">
+				</div>			
+	
+				<!-- VENUE ADDRESS -->
+				<label>Venue Address</label>
+				
+				<!-- VENUE POST CODE -->
+				<div class = "col-sm-6 form-group">
+					<label>Post Code</label>
+					<input type = "text"  name="postcode" th:value = "${venue.postcode}" th:required = "required">
+				</div>
+					
+				<!-- VENUE ROAD -->
+				<div class = "col-sm-6 form-group">
+					<label>Road Name</label>
+					<input type = "text" name="roadName" th:value = "${venue.roadName}" maxlength = "300" th:required = "required"></textarea>				
+				</div>
+					
+				<button class = "btn btn-primary" type = "submit">Save</button>
+				<a class = "btn btn-danger" role = "button" href = "/venues" > Cancel</a>
+							
+			</form>
+        
+	</body>
+</html>
+
+
+

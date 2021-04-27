@@ -113,4 +113,25 @@ public class VenuesController {
 		
 	}
 	
+	@GetMapping(value = "/update_venue/{id}")
+    public String goToUpdate(@PathVariable("id") long id, Model model) {
+		Venue venue = venueService.findOne(id);
+		//model.addAttribute("venues", venueService.findAll());
+		model.addAttribute("venue", venue);	
+		return "venues/update_venue";
+	}
+	
+	@PostMapping(value = "/update_venue/{id}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public String saveUpdate(@RequestBody @Valid @ModelAttribute Venue venue, 
+			BindingResult errors,
+			Model model
+			) {
+		if(errors.hasErrors()) {
+			return "redirect:/venues/update_venue/" + venue.getId();
+		}
+		venueService.save(venue);
+		return "redirect:/venues";
+	}
+
+	
 }
