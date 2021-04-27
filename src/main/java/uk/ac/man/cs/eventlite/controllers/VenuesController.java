@@ -112,11 +112,12 @@ public class VenuesController {
 		return "redirect:/venues";
 		
 	}
+	
 	@GetMapping(value = "/update_venue/{id}")
     public String goToUpdate(@PathVariable("id") long id, Model model) {
 		Venue venue = venueService.findOne(id);
-		model.addAttribute("venues", venueService.findAll());
-		//model.addAttribute("event", event);	
+		//model.addAttribute("venues", venueService.findAll());
+		model.addAttribute("venue", venue);	
 		return "venues/update_venue";
 	}
 	
@@ -126,10 +127,10 @@ public class VenuesController {
 			Model model
 			) {
 		if(errors.hasErrors()) {
-			return "redirect:/update_venue/" + venue.getId();
+			return "redirect:/venues/update_venue/" + venue.getId();
 		}
 		venueService.save(venue);
-		return "redirect:/events";
+		return "redirect:/venues";
 	}
 
 	
