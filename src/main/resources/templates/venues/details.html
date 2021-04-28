@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/default}">
+<head>
+  <title>Venue Info</title>
+  <style>
+    div {margin-top: 10px; margin-bottom: 10px}
+    #info {background-color: #ededed; padding: 60px 25px 60px 25px}
+  </style>
+</head>
+<body>
+  <div layout:fragment="content">
+    <div id="info">
+      <blockquote>
+        <h1 th:text="${venue.name}">Venue Name</h1>
+        <p th:text="${venue.roadName}">Road</p>
+        <p th:text="${venue.postcode}">Postcode</p>
+        <p th:text="'Capacity: '+${venue.capacity}">Capacity</p>
+        
+<!-- Upcoming Events -->
+        <table class="table table-striped table-hover">
+        <h4>Upcoming events</h4>
+          <thead>
+            <tr>
+              <th><i class="fas fa-bolt"></i> Event</th>
+              <th><i class="fas fa-map-marker-alt"></i> Venue</th>
+              <th><i class="fas fa-calendar"></i> Date</th>
+              <th><i class="fas fa-clock"></i> Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="e : ${upcomingevents}">
+              <td><a th:href="@{/events/{num}(num=${e.id})}" th:text="${e.name}">My Event</a></td>   
+              <td th:text="${e.venue.name}">Event Venue</td>
+              <td th:text="${{e.date}}">Event date</td>
+              <td th:text="${{e.time}}">Event time</td>
+            </tr>
+          </tbody>
+        </table>
+
+<!-- Past Events -->
+        <table class="table table-striped table-hover">
+        <h4>Past events</h4>
+          <thead>
+            <tr>
+              <th><i class="fas fa-bolt"></i> Event</th>
+              <th><i class="fas fa-map-marker-alt"></i> Venue</th>
+              <th><i class="fas fa-calendar"></i> Date</th>
+              <th><i class="fas fa-clock"></i> Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="e : ${pastevents}">
+              <td><a th:href="@{/events/{num}(num=${e.id})}" th:text="${e.name}">My Event</a></td>   
+              <td th:text="${e.venue.name}">Event Venue</td>
+              <td th:text="${{e.date}}">Event date</td>
+              <td th:text="${{e.time}}">Event time</td>
+            </tr>
+          </tbody>
+        </table>
+        
+      </blockquote>
+      
+      <a class="btn btn-primary" th:onclick="history.back(-1)" style="color:white" type='button'><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</a>   
+    </div> 
+    
+  </div>
+</body>
+</html>
