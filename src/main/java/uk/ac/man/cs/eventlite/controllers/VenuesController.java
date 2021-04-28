@@ -1,5 +1,8 @@
 package uk.ac.man.cs.eventlite.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +43,29 @@ public class VenuesController {
 	}
 	
 	@GetMapping("/{id}")
-	public String greeting(@PathVariable("id") long id, Model model) {
+	public String getVenueDetails(@PathVariable("id") long id, Model model) {
 
 		Venue venue = venueService.findOne(id);
 		model.addAttribute("venue", venue);
 		
+		List<Event> events = eventService.findUpcomingEvents();
+		List<Event> upcomingEvents = new ArrayList<Event>();
+		for(Event e:events) {
+			if(e.getVenue().getId() == id) {
+				upcomingEvents.add(e);
+			}
+		}
+		
+		events = eventService.findPastEvents();
+		List<Event> pastEvents = new ArrayList<Event>();
+		for(Event e:events) {
+			if(e.getVenue().getId() == id) {
+				pastEvents.add(e);
+			}
+		}
+		
+		model.addAttribute("pastevents", pastEvents);
+		model.addAttribute("upcomingevents", upcomingEvents);
 		return "venues/details";
 	}
 	
