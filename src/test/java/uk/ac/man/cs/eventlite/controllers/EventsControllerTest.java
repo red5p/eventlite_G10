@@ -106,7 +106,7 @@ public class EventsControllerTest {
 
         mvc.perform(post("/events").with(user("Rob").roles(Security.ADMIN_ROLE))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("name", "Firstname Surname")
+                .param("name", "Event Name")
                 .param("venue.id", "2")
                 .param("date", tomorrowsDate)
                 .param("time", tempTimeTest)
@@ -118,18 +118,17 @@ public class EventsControllerTest {
             .andExpect(flash().attributeExists("ok_message"));
 
         verify(eventService).save(argument.capture());
-        assertThat("Firstname Surname", equalTo(argument.getValue().getName()));
+        assertThat("Event Name", equalTo(argument.getValue().getName()));
         assertThat(2L, equalTo(argument.getValue().getVenue().getId()));
         assertThat(tomorrowsDate, equalTo(argument.getValue().getDate().toString()));
         assertThat(tempTimeTest, equalTo(argument.getValue().getTime().toString()));
         assertThat("Very good event", equalTo(argument.getValue().getDescription()));
     }
 
-
     @Test
     public void AftterEventWithNoAuthourization() throws Exception {
         mvc.perform(post("/events").contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("name", "Firstname Surname")
+                .param("name", "Event Name")
                 .param("venue", "2")
                 .param("date", tomorrowsDate)
                 .param("time", tempTimeTest)
@@ -144,7 +143,7 @@ public class EventsControllerTest {
     public void AfterEventIfIncorrectRole() throws Exception {
         mvc.perform(
                 post("/events").with(user("Rob").roles(BAD_ROLE)).contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("name", "Firstname Surname")
+                .param("name", "Event Name")
                 .param("venue", "2")
                 .param("date", tomorrowsDate)
                 .param("time", tempTimeTest)
@@ -158,7 +157,7 @@ public class EventsControllerTest {
     public void afterEventWithPreviousDate() throws Exception {
         mvc.perform(post("/events").with(user("Rob").roles(Security.ADMIN_ROLE))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("name", "Firstname Surname")
+                .param("name", "Event Name")
                 .param("venue.id", "2")
                 .param("date", previoiusDate)
                 .accept(MediaType.TEXT_HTML)
@@ -174,7 +173,7 @@ public class EventsControllerTest {
     public void AfterEventIfNotRole() throws Exception {
         mvc.perform(post("/events").with(user("Rob").roles(Security.ADMIN_ROLE))
             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-            .param("name", "Firstname Surname")
+            .param("name", "Event Name")
             .param("venue", "2")
             .param("date", tomorrowsDate)
             .param("time", tempTimeTest)
@@ -187,7 +186,7 @@ public class EventsControllerTest {
     public void AfterEventWithPresentDate() throws Exception {
         mvc.perform(post("/events").with(user("Rob").roles(Security.ADMIN_ROLE))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("name", "Firstname Surname")
+                .param("name", "Event Name")
                 .param("venue.id", "2")
                 .param("date", todaysDate)
                 .accept(MediaType.TEXT_HTML)
@@ -204,7 +203,7 @@ public class EventsControllerTest {
         mvc.perform(post("/events").with(user("Rob").roles(Security.ADMIN_ROLE))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("name", "Firstname Surname")
+                .param("name", "Event Name")
                 .param("venue", "2")
                 .param("date", tomorrowsDate)
                 .param("time", "12:o1")
@@ -224,7 +223,7 @@ public class EventsControllerTest {
 
 	    mvc.perform(post("/events").with(user("Rob").roles(Security.ADMIN_ROLE))
 	            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-	            .param("name", "Firstname Surname")
+	            .param("name", "Event Name")
 	            .param("venue.id", "2")
 	            .param("date", tomorrowsDate)
 	            .accept(MediaType.TEXT_HTML).with(csrf()))
@@ -234,18 +233,16 @@ public class EventsControllerTest {
 	        .andExpect(flash().attributeExists("ok_message"));
 
 	    verify(eventService).save(arg.capture());
-	    assertThat("Firstname Surname", equalTo(arg.getValue().getName()));
+	    assertThat("Event Name", equalTo(arg.getValue().getName()));
 	    assertThat(2L, equalTo(arg.getValue().getVenue().getId()));
 	    assertThat(tomorrowsDate, equalTo(arg.getValue().getDate().toString()));
 	}
-
-
 
     @Test
     public void afterEventWithMissingVenue() throws Exception {
         mvc.perform(post("/events").with(user("Rob").roles(Security.ADMIN_ROLE))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("name", "Firstname Surname")
+                .param("name", "Event Name")
                 .param("venue.id", "")
                 .param("date", tomorrowsDate)
                 .accept(MediaType.TEXT_HTML)
@@ -256,13 +253,4 @@ public class EventsControllerTest {
             .andExpect(flash().attributeCount(0));
         verify(eventService, never()).save(event);
     }
-
-
-
-
-
-
-
-
-
 }
