@@ -1,33 +1,41 @@
 package uk.ac.man.cs.eventlite.controllers;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.handler;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.mockito.Mockito.verify;
-import uk.ac.man.cs.eventlite.config.Security;
-import uk.ac.man.cs.eventlite.dao.EventService;
-import uk.ac.man.cs.eventlite.dao.VenueService;
-import uk.ac.man.cs.eventlite.entities.Event;
-import uk.ac.man.cs.eventlite.entities.Venue;
-
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.handler;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import java.util.ArrayList;
 import java.util.Collections;
-
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import uk.ac.man.cs.eventlite.config.Security;
+import uk.ac.man.cs.eventlite.dao.EventService;
+import uk.ac.man.cs.eventlite.dao.VenueService;
+import uk.ac.man.cs.eventlite.entities.Event;
+import uk.ac.man.cs.eventlite.entities.Venue;
 
 @WebMvcTest(VenuesController.class)
 public class VenuesControllerTest {
-
 
     @Mock
     private Venue venue;
@@ -38,14 +46,11 @@ public class VenuesControllerTest {
     @Autowired
     private MockMvc mvc;
 
-
-
     @MockBean
     private VenueService venueService;
 
     @MockBean
     private EventService eventService;
-    
     
     @Test
     public void deleteVenueWithEvents() throws Exception {
@@ -59,7 +64,6 @@ public class VenuesControllerTest {
         verify(venueService, never()).deleteById(id);
     }
 
-
     @Test
     public void deleteVenues() throws Exception {
         long id = 1;
@@ -67,8 +71,77 @@ public class VenuesControllerTest {
         mvc.perform(delete("/venues/1").with(user("Rob").roles(Security.ADMIN_ROLE)).accept(MediaType.TEXT_HTML).with(csrf())).andExpect(handler().methodName("deleteVenue")).andExpect(status().is(302));
         verify(venueService).deleteById(id);
     }
+    
+	@Test
+	public void AftterVenueWithNoAuthourization() throws Exception {
+		mvc.perform(post("/venues").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.param("name", "Venue Name")
+				.param("roadName", "Road Name")
+				.param("postcode", "M13 9PR")
+				.param("capacity", "100")
+				.accept(MediaType.TEXT_HTML).with(csrf()))
+				.andExpect(status().isFound())
+				.andExpect(header().string("Location", endsWith("/sign-in")));
+		verify(venueService, never()).save(venue);
+	}
+	
+	@Test
+	public void AfterVenueIfIncorrectRole() throws Exception {
+		mvc.perform(post("/venues").with(user("Rob").roles("USER"))
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.param("name", "Venue Name")
+				.param("roadName", "Road Name")
+				.param("postcode", "M13 9PR")
+				.param("capacity", "100")
+				.accept(MediaType.TEXT_HTML).with(csrf()))
+				.andExpect(status().isForbidden());
+		verify(venueService, never()).save(venue);
+	}
+	
+	@Test
+	public void AfterVenuetWithNoAuthourization() throws Exception {
+		mvc.perform(post("/venues").with(user("Rob").roles(Security.ADMIN_ROLE))
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.param("name", "Venue Name")
+				.param("roadName", "Road Name")
+				.param("postcode", "M13 9PR")
+				.param("capacity", "100")
+				.accept(MediaType.TEXT_HTML)).andExpect(status().isForbidden());
+		verify(venueService, never()).save(venue);
+	}
+	
 
+	public void AfterVenue() throws Exception {
+		ArgumentCaptor<Venue> arg = ArgumentCaptor.forClass(Venue.class);
+		mvc.perform(MockMvcRequestBuilders.post("/venues/newVenue").with(user("Organiser").roles(Security.ADMIN_ROLE))
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.param("name", "Venue Name")
+				.param("roadName", "Road Name")
+				.param("postcode", "M13 9PR")
+				.param("capacity", "100")
+				.accept(MediaType.TEXT_HTML).with(csrf()))
+		.andExpect(status().isFound()).andExpect(content().string(""))
+		.andExpect(view().name("redirect:/venues")).andExpect(model().hasNoErrors())
+		.andExpect(handler().methodName("newVenue")).andExpect(flash().attributeExists("ok_message"));
 
+		verify(venueService).save(arg.capture());
+		assertThat(arg.getValue().getName(), equalTo("Venue Name"));
+		assertThat(arg.getValue().getRoadName(), equalTo("Road Name"));
+		assertThat(arg.getValue().getPostcode(), equalTo("M13 9PR"));
+		assertThat(Integer.toString(arg.getValue().getCapacity()), equalTo("100"));
+	}
 
-
+	@Test
+	public void AfterVenueNoData() throws Exception {
+		ArgumentCaptor<Venue> arg = ArgumentCaptor.forClass(Venue.class);
+		mvc.perform(MockMvcRequestBuilders.post("/venues/newVenue").with(user("Organiser").roles(Security.ADMIN_ROLE))
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.param("name", "")
+				.param("roadName", "")
+				.param("postcode", "")
+				.param("capacity", "")
+				.accept(MediaType.TEXT_HTML)).andExpect(status().isForbidden());
+		
+		verify(venueService, never()).save(venue);
+	}
 }
