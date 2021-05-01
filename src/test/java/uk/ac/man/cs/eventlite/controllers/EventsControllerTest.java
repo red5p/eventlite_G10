@@ -126,7 +126,7 @@ public class EventsControllerTest {
     }
 
     @Test
-    public void AftterEventWithNoAuthourization() throws Exception {
+    public void AfterEventWithNoAuthourization() throws Exception {
         mvc.perform(post("/events").contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("name", "Event Name")
                 .param("venue", "2")
