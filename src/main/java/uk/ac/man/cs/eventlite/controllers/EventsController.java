@@ -1,6 +1,13 @@
 package uk.ac.man.cs.eventlite.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import Geocoding.twitterImplementation;
+import twitter4j.ResponseList;
+import twitter4j.Status;
+import twitter4j.TwitterException;
+
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +47,6 @@ import uk.ac.man.cs.eventlite.dao.VenueService;
 import uk.ac.man.cs.eventlite.entities.Event;
 
 import uk.ac.man.cs.eventlite.dao.EventService;
-
 @Controller
 @RequestMapping(value = "/events", produces = { MediaType.TEXT_HTML_VALUE })
 public class EventsController {
@@ -51,6 +57,8 @@ public class EventsController {
 	@Autowired
 	private VenueService venueService;
 	
+	private twitterImplementation twitterService = new twitterImplementation();
+
 	
 	
 	@GetMapping("/new")
@@ -102,6 +110,22 @@ public class EventsController {
 
 		model.addAttribute("longitude", longitude);
 		model.addAttribute("latitude", latitude);
+		
+		List<Status> timeline;
+		try {
+			timeline = twitterService.getTimeline();
+			if (timeline != null) {
+				if (timeline.size() > 5) {
+					timeline = timeline.subList(0, 5);
+				}
+				model.addAttribute("timeline", timeline);
+			}
+			
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		
 		return "events/index";
 	}
