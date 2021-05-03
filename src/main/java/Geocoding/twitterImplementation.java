@@ -1,8 +1,15 @@
 package Geocoding;
 
+import java.util.List;
+
+import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
+import twitter4j.TwitterException;
+
+import twitter4j.TwitterException;
+
 
 public class twitterImplementation {
 
@@ -18,4 +25,10 @@ public class twitterImplementation {
 	  TwitterFactory tf = new TwitterFactory(cb.build()); 
 	  twitter = tf.getInstance();
 	}
+
+	public List<Status> getTimeline() throws TwitterException {
+		List<Status> res = twitter.getHomeTimeline();
+		return res;
+	}
+
 }
