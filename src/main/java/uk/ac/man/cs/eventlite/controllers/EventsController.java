@@ -183,4 +183,18 @@ public class EventsController {
 		
 		return "events/show";
 	}
+
+	@PostMapping(value = "/{id}")
+	public String tweetEvent(@PathVariable("id") long eventId,
+							 @RequestParam("tweet") String tweet, 
+							 RedirectAttributes redirectAttrs) throws TwitterException {
+    
+	Status post = twitterService.postTweet(tweet);
+	String message = String.format("Your tweet: %s was posted.", post.getText());
+	redirectAttrs.addFlashAttribute("message", message);
+
+	return String.format("redirect:/events/%d", eventId);
+
+    
+  }
 }

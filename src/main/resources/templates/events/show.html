@@ -24,7 +24,20 @@
         
       <a class="btn btn-primary" th:onclick="history.back(-1)" style="color:white" type='button'><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</a>   
     </div> 
-    
+   
+	<div>
+		<form class="form-horizontal" method = "post" th:action="@{/events/{id}(id=${id})}">
+			<div class="form-group">
+				<div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+			</div>
+			<div class="col-sm-6 form-group">
+				<label>Tweet this event!</label> 
+				<input type="text" class="form-control" maxlength = "256" name = "tweet" th:placeholder = "${event}" th:required = "required">
+			</div>
+			<button type="submit" class="btn btn-primary">Tweet!</button>
+		</form>
+	</div>
+  
     <div id="map"></div>
     <script th:inline="javascript">
     
