@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.handler;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -12,20 +13,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Collections;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import uk.ac.man.cs.eventlite.config.Security;
 import uk.ac.man.cs.eventlite.dao.EventService;
 import uk.ac.man.cs.eventlite.entities.Event;
+import uk.ac.man.cs.eventlite.entities.Venue;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(EventsControllerApi.class)
@@ -56,7 +61,7 @@ public class EventsControllerApiTest {
 		e.setName("Event");
 		e.setDate(LocalDate.now());
 		e.setTime(LocalTime.now());
-		e.setVenue(null);
+		e.setVenue(new Venue());
 		when(eventService.findAll()).thenReturn(Collections.<Event>singletonList(e));
 
 		mvc.perform(get("/api/events").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
@@ -66,4 +71,25 @@ public class EventsControllerApiTest {
 
 		verify(eventService).findAll();
 	}
+	
+	@Test
+	public void jsonTest() throws Exception {
+		Event event = new Event();
+		event.setId(0);
+		event.setName("Test Event");
+		event.setDate(LocalDate.now());
+		event.setTime(LocalTime.now());
+		event.setVenue(new Venue());
+		when(eventService.findAll()).thenReturn(Collections.<Event>singletonList(event));
+
+		MvcResult result = mvc.perform(get("/api/events").accept(MediaType.APPLICATION_JSON)).andReturn();
+		String content = result.getResponse().getContentAsString();
+		assert(content.contains("_embedded"));
+		assert(content.contains("events"));
+		assert(content.contains("_links"));
+		assert(content.contains("self"));
+		assert(content.contains("href"));
+	}
+	
+	
 }
