@@ -55,10 +55,8 @@
           			Delete Event
           		</button>
           	</form>
-          	</td>
+          </td>
 
-          		</form>
-          	</td>
           	
           <td>
           <div sec:authorize="isAuthenticated()">
@@ -143,15 +141,13 @@
           <td th:text="${{e.time}}">Event time</td>
           
           <td>
-          	<form th:action = "@{/events/delete}">
-          		<button class = "btn btn-danger" type = "submit" th:name = "id" th:value = "${e.id}">
-          		<i class="fas fa-trash" aria-hidden="true"></i>
+          	<form th:action = "@{/events/{num}(num=${e.id})}"  th:method="delete">
+          		<button class = "btn btn-danger" type = "submit">
+          		  <i class="fas fa-trash" aria-hidden="true"></i>
           			Delete Event
           		</button>
-
           	</form>
           </td>
-
           	
           <td>
           <div sec:authorize="isAuthenticated()">

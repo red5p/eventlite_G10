@@ -21,8 +21,16 @@
         <p th:text="'At '+${time}+' on '+${#temporals.dayOfWeekName(date)}+', '+${#temporals.day(date)}+' '+${#temporals.monthName(date)}+' '+${#temporals.year(date)}"></p>
         <p th:text="${description}">Description</p>
       </blockquote>
-        
-      <a class="btn btn-primary" th:onclick="history.back(-1)" style="color:white" type='button'><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</a>   
+      <div > 
+        <form th:action = "@{/events/{num}(num=${id})}" style="float: left;" th:method="delete">
+          <button class = "btn btn-danger" type = "submit" style="margin-right:3px">
+            <i class="fas fa-trash" aria-hidden="true"></i>
+          	  Delete Event
+          </button>
+        </form>
+        <a class="btn btn-primary" th:onclick="history.back(-1)" style="color:white" type='button'><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</a>   
+	  </div>
+	
     </div> 
    
 	<div>
