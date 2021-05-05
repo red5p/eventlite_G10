@@ -5,6 +5,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.equalTo;
@@ -296,5 +299,49 @@ public class EventsControllerTest {
             .andExpect(handler().methodName("createEvent"))
             .andExpect(flash().attributeCount(0));
         verify(eventService, never()).save(event);
+    }
+    @Test
+    @WithMockUser(roles= "ADMINISTRATOR")
+    public void updateEventInvalid() throws Exception{
+
+            when(eventService.findById(0)).thenReturn(null);
+
+            mvc.perform(MockMvcRequestBuilders.patch("/events/0").accept(MediaType.TEXT_HTML).with(csrf())
+                    .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                    .param("date","2020-12-12")
+                    .param("time","09:00")
+                    .param("name","test event")
+                    .sessionAttr("venue",venue)
+                    .param("description","testing"))
+            .andExpect(status().isMethodNotAllowed());
+
+    }
+
+    @Test
+    public void updateEventNoAuthentication() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.post("/venues").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("name", "test event")
+                .param("id", "99")
+                .param("date", "2020-12-12")
+                .param("time", "09:00")
+                .param("description","testing")
+                .accept(MediaType.TEXT_HTML).with(csrf())).andExpect(status().isFound())
+                .andExpect(header().string("Location", endsWith("/sign-in")));
+        verify(eventService, never()).save(event);
+
+    }
+
+    @Test
+    public void updateEventNoCsrf() throws Exception{
+
+            mvc.perform(MockMvcRequestBuilders.post("/events").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                    .with(user("Rob").roles(Security.ADMIN_ROLE))
+                    .param("name","test event")
+                    .param("id","10")
+                    .param("date", "2020-12-12")
+                    .param("time", "09:00")
+                    .param("description","testing"))
+            .andExpect(status().isForbidden());
+
     }
 }
