@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.hibernate.EntityMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
@@ -49,8 +50,11 @@ public class VenuesControllerApi {
 	
 	private CollectionModel<Venue> venueCollection(Iterable<Venue> venues) {
 		Link selfLink = linkTo(methodOn(VenuesControllerApi.class).getAllVenues()).withSelfRel();
+		Link profileLink = linkTo(VenuesControllerApi.class).slash("profile").slash("venues").withRel("profile");
 
-		return CollectionModel.of(venues, selfLink);
+		Link[] links = {selfLink, profileLink};
+		
+		return CollectionModel.of(venues, links);
 	}
 
 //------Single Venue------------------------------------------------------------------------------------
