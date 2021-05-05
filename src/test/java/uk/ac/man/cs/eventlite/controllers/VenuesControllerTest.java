@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
+import org.springframework.security.test.context.support.WithMockUser;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -144,4 +145,53 @@ public class VenuesControllerTest {
 		
 		verify(venueService, never()).save(venue);
 	}
+		@Test
+	public void updateVenueNoAuthentication() throws Exception {   
+		mvc.perform(MockMvcRequestBuilders.post("/venues").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.param("id", "1")
+				.param("name", "testing")
+				.param("address", "address")
+				.param("postcode", "M15 7GT")
+				.param("capacity", "100")
+				.accept(MediaType.TEXT_HTML).with(csrf())).andExpect(status().isFound())
+				.andExpect(header().string("Location", endsWith("/sign-in")));
+		verify(venueService, never()).save(venue);
+				
+	}
+	
+	@Test
+	@WithMockUser(roles= "ADMINISTRATOR")
+	public void updateVenueIncorrectly() throws Exception{ 
+
+	        when(venueService.findOne(0)).thenReturn(null);
+
+	        mvc.perform(MockMvcRequestBuilders.patch("/venues/0").accept(MediaType.TEXT_HTML).with(csrf())
+	                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	                .param("capacity","1000")
+	                .param("coordinates","6X 8TY")
+	                .param("name","venue")
+	                .sessionAttr("venue",venue)
+	                .param("description","testing"))
+	        .andExpect(status().isMethodNotAllowed());
+
+	}
+	
+	@Test
+	@WithMockUser(roles= "ADMINISTRATOR")
+	public void updateVenueWithNoName() throws Exception{
+
+	        when(venueService.findOne(0)).thenReturn(null);
+
+	        mvc.perform(MockMvcRequestBuilders.patch("/venues/0").accept(MediaType.TEXT_HTML).with(csrf())
+	                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	                .param("id","01")
+	                .param("address","address")
+	                .param("postcode","M15 7GT")
+	                .param("capacity","1000")
+	                .sessionAttr("venue",venue)
+	                .param("description","testing"))
+	        .andExpect(status().isMethodNotAllowed());
+
+	}
+    
 }
