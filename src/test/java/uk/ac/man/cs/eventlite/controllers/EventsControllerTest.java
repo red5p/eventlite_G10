@@ -99,6 +99,50 @@ public class EventsControllerTest {
         mvc.perform(delete("/events/1").with(user("Rob").roles(Security.ADMIN_ROLE)).accept(MediaType.TEXT_HTML).with(csrf())).andExpect(view().name("redirect:/events")).andExpect(status().isFound());
 
     }
+    
+    
+	@Test
+	public void addEvent() throws Exception{
+		ArgumentCaptor<Event> arg = ArgumentCaptor.forClass(Event.class);
+	
+		mvc.perform(post("/events").with(user("Rob").roles(Security.ADMIN_ROLE))
+			.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+			.param("name", "test").param("date", LocalDate.now().plusDays(1).toString()).param("venue.id", "01")
+			.accept(MediaType.TEXT_HTML)
+			.with(csrf()))
+			.andExpect(model().hasNoErrors())
+			.andExpect(status().isFound())
+			.andExpect(handler().methodName("createEvent"))
+			.andExpect(view().name("redirect:/events"));
+		
+		verify(eventService).save(arg.capture());
+	}
+	
+	
+
+	@Test
+	public void getEvent() throws Exception{
+		when(eventService.findOne(1)).thenReturn(event);
+		when(event.getVenue()).thenReturn(venue);
+		
+		
+		mvc.perform(get("/events/1").accept(MediaType.TEXT_HTML)).andExpect(status().isOk())
+		.andExpect(view().name("events/show")).andExpect(handler().methodName("greeting"));
+		
+		verify(eventService).findOne(1);
+	}
+	
+
+	public void getAllEventsByName() throws Exception {
+		
+		when(eventService.findAll()).thenReturn(Collections.<Event>singletonList(event));
+		
+		mvc.perform(get("/events?keyword=abc").accept(MediaType.TEXT_HTML)).andExpect(status().isOk())
+		.andExpect(handler().methodName("getAllEvents")).andExpect(view().name("events/index"));
+		
+		verify(eventService).findUpcomingEventsByName("abc");
+	}
+
 
     @Test
     public void afterEvent() throws Exception {
