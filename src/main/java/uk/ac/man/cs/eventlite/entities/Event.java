@@ -6,7 +6,6 @@ import java.time.LocalTime;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.Future;
-import javax.validation.constraints.Past;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
