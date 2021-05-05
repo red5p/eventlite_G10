@@ -43,7 +43,7 @@
 				<!-- EVENT DESCRIPTION -->
 				<div class = "col-sm-6 form-group">
 				<label>Event Description</label>
-					<textarea row = "5" cols = "25" name="description" th:value="${event.description}" maxlength = "500"></textarea>				
+					<textarea row = "5" cols = "25" name="description" th:text="${event.description}" maxlength = "500"></textarea>				
 				</div>
 				
 				<button class = "btn btn-primary" type = "submit">Save</button>
