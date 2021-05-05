@@ -304,7 +304,7 @@ public class EventsControllerTest {
     @WithMockUser(roles= "ADMINISTRATOR")
     public void updateEventInvalid() throws Exception{
 
-            when(eventService.findById(0)).thenReturn(null);
+            when(eventService.findOne(0)).thenReturn(null);
 
             mvc.perform(MockMvcRequestBuilders.patch("/events/0").accept(MediaType.TEXT_HTML).with(csrf())
                     .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
