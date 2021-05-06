@@ -183,6 +183,7 @@ public class EventsController {
 		model.addAttribute("description", event.getDescription());
 		model.addAttribute("longitude", event.getVenue().getLongitude());
 		model.addAttribute("latitude", event.getVenue().getLatitude());
+		model.addAttribute("venueId", event.getVenue().getId());
 		
 		return "events/show";
 	}
