@@ -70,7 +70,7 @@
 		          <td><a th:href="@{/venues/{num}(num=${v.id})}" th:utext="${v.name}">Venue Name</a></td>
 		          <td th:utext="${v.roadName}">Venue Address</td>
 		          <td <b th:utext="${v.postcode}">Venue postcode</td>
-		          <td <b th:utext="'Capacity: ' + ${v.capacity}">Venue Capacity</td>
+		          <td <b th:utext="${v.capacity}">Venue Capacity</td>
 		         </tr>
 	        </tbody>
     </table>
@@ -78,7 +78,8 @@
 	<div sec:authorize="isAuthenticated()">
 		<p>
 			<a class = "btn btn-primary" role = "button" href="/venues/new" style="float:left; margin-right:3px">
-			Add Venue
+			  <i class="fas fa-plus-circle"></i>
+			  Add Venue
 			</a>
 		</p>
 	</div>	

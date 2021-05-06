@@ -11,6 +11,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.handler;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -74,7 +75,43 @@ public class VenuesControllerTest {
     }
     
 	@Test
-	public void AftterVenueWithNoAuthourization() throws Exception {
+	public void SearchVenuesWithEmptyString() throws Exception {
+		when(venueService.findAllByName("")).thenReturn(Collections.<Venue>singletonList(venue));
+		
+		mvc.perform(get("/venues/?keyword=").accept(MediaType.TEXT_HTML))
+		.andExpect(status().isOk()).andExpect(view().name("venues/index")).andExpect(handler().methodName("findVenuesByName"));
+		
+		verify(venueService).findAllByName("");
+	}
+	
+	@Test
+	public void searchVenues() throws Exception {
+		when(venueService.findAllByName("venue")).thenReturn(Collections.<Venue>singletonList(venue));
+		
+		mvc.perform(get("/venues/?keyword=venue").accept(MediaType.TEXT_HTML))
+		.andExpect(status().isOk()).andExpect(view().name("venues/index")).andExpect(handler().methodName("findVenuesByName"));
+		
+		verify(venueService).findAllByName("venue");
+	}
+	
+	@Test
+	public void getVenue() throws Exception {
+		when(venueService.findOne(1)).thenReturn(venue);
+		
+		mvc.perform(get("/venues/1").accept(MediaType.TEXT_HTML)).andExpect(status().isOk())
+				.andExpect(view().name("venues/details")).andExpect(handler().methodName("getVenueDetails"));
+
+		verify(venue).getName();
+		verify(venue).getRoadName();
+		verify(venue).getPostcode();
+		verify(venue).getCapacity();
+		verify(eventService).findUpcomingEvents();
+		verify(eventService).findPastEvents();
+	}
+
+    
+	@Test
+	public void AfterVenueWithNoAuthourization() throws Exception {
 		mvc.perform(post("/venues").contentType(MediaType.APPLICATION_FORM_URLENCODED)
 				.param("name", "Venue Name")
 				.param("roadName", "Road Name")
