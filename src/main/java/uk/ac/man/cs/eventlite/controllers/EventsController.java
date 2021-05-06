@@ -172,18 +172,12 @@ public class EventsController {
 	}
 	
 	@GetMapping("/{id}")
-	public String greeting(@PathVariable("id") long id, Model model) {
+	public String getEventDetails(@PathVariable("id") long id, Model model) {
 
 		Event event = eventService.findOne(id);
 		model.addAttribute("isFuture",event.isFuture());
-		model.addAttribute("event", event.getName());
-		model.addAttribute("date", event.getDate());
-		model.addAttribute("time", event.getTime());
-		model.addAttribute("venue", event.getVenue().getName());
-		model.addAttribute("description", event.getDescription());
-		model.addAttribute("longitude", event.getVenue().getLongitude());
-		model.addAttribute("latitude", event.getVenue().getLatitude());
-		model.addAttribute("venueId", event.getVenue().getId());
+		model.addAttribute("event", event);
+		model.addAttribute("venue", event.getVenue());
 		
 		return "events/show";
 	}
