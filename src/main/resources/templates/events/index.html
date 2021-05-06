@@ -8,13 +8,44 @@
   <script src="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js"></script>
   <style>
     div {margin-top: 10px; margin-bottom: 10px}
-    #info {background-color: #ededed; padding: 60px 25px 60px 25px}
     #map {top: 0; bottom: 0; width: 100%; height:600px}
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #ffffff;
+    }
+    li {
+      float: left;
+    }
+    li a {
+      display: block;
+      color: #666;
+      text-align: center;
+      padding: 7px 10px 7px 10px;
+      text-decoration: none;
+    }
+    li .button:hover {
+      background-color: 	#3581ff;
+      color:#ffffff;
+      text-decoration: none;
+    }
+    .active {
+      background-color:#d5d5d5;
+      text-decoration: none;
+      color:#ffffff;
+    }
   </style>
 </head>
 <body>
   <div layout:fragment="content">
-    <h1>All events</h1>
+    <ul>
+      <li><a href="/events" class="active button"><b>Event List</b></a></li>
+      <li><a href="/venues" class="button"><b>Venue List</b></a></li>
+      <li style="float:right"><a href="/"><i class="fas fa-home fa-lg"></i></a></li>
+    </ul>
+    <h1>Events</h1>
 
 
 
@@ -38,8 +69,6 @@
           <th><i class="fas fa-map-marker-alt"></i> Venue</th>
           <th><i class="fas fa-calendar"></i> Date</th>
           <th><i class="fas fa-clock"></i> Time</th>
-          <th><i class="fas fa-trash"></i> Delete</th>
-          <th><i class="fas fa-edit"></i> Update</th>
         </tr>
       </thead>
       <tbody>
@@ -47,28 +76,7 @@
           <td><a th:href="@{/events/{num}(num=${e.id})}" th:text="${e.name}">My Event</a></td>   
           <td><a th:href="@{/venues/{num}(num=${e.venue.id})}" th:text="${e.venue.name}">Event Venue</a></td>
           <td th:text="${{e.date}}">Event date</td>
-          <td th:text="${{e.time}}">Event time</td>
-         <td>
-          	<form th:action = "@{/events/{num}(num=${e.id})}"  th:method="delete">
-          		<button class = "btn btn-danger" type = "submit">
-          		  <i class="fas fa-trash" aria-hidden="true"></i>
-          			Delete Event
-          		</button>
-          	</form>
-          </td>
-
-          	
-          <td>
-          <div sec:authorize="isAuthenticated()">
-          	<form th:action = "@{/events/update/{id}(id=${e.id})}" th:method="get">
-          		<button class = "btn btn-primary" type = "submit" th:value = "${e.id}"><i class="fas fa-edit"></i>
-          			Update Event 
-          		</button> 
-          		</form>
-          	</div>
-          	</td>
-          	
-
+          <td th:text="${{e.time}}">Event time</td>         	
         </tr>
       </tbody>
     </table>
@@ -129,8 +137,6 @@
           <th><i class="fas fa-map-marker-alt"></i> Venue</th>
           <th><i class="fas fa-calendar"></i> Date</th>
           <th><i class="fas fa-clock"></i> Time</th>
-          <th><i class="fas fa-trash"></i> Delete</th>
-          <th><i class="fas fa-edit"></i> Update</th>
         </tr>
       </thead>
       <tbody>
@@ -138,35 +144,14 @@
           <td><a th:href="@{/events/{num}(num=${e.id})}" th:text="${e.name}">My Event</a></td>   
           <td><a th:href="@{/venues/{num}(num=${e.venue.id})}" th:text="${e.venue.name}">Event Venue</a></td>
           <td th:text="${{e.date}}">Event date</td>
-          <td th:text="${{e.time}}">Event time</td>
-          
-          <td>
-          	<form th:action = "@{/events/{num}(num=${e.id})}"  th:method="delete">
-          		<button class = "btn btn-danger" type = "submit">
-          		  <i class="fas fa-trash" aria-hidden="true"></i>
-          			Delete Event
-          		</button>
-          	</form>
-          </td>
-          	
-          <td>
-          <div sec:authorize="isAuthenticated()">
-          	<form th:action = "@{/events/update/{id}(id=${e.id})}" th:method="get">
-          		<button class = "btn btn-primary" type = "submit" th:value = "${e.id}"><i class="fas fa-edit"></i>
-          			Update Event 
-          		</button> 
-          		</form>
-          	</div>
-          	</td>
-          	
-
+          <td th:text="${{e.time}}">Event time</td>      	
         </tr>
       </tbody>
     </table>
 	  
 	<div sec:authorize="isAuthenticated()">
 		<p>
-			<a class = "btn btn-primary" role = "button" href="/events/new">
+			<a class = "btn btn-primary" role = "button" href="/events/new" style="float:left; margin-right:3px">
 			New Event
 			</a>
 		</p>

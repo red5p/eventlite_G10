@@ -130,7 +130,7 @@ public class EventsControllerTest {
 		
 		
 		mvc.perform(get("/events/1").accept(MediaType.TEXT_HTML)).andExpect(status().isOk())
-		.andExpect(view().name("events/show")).andExpect(handler().methodName("greeting"));
+		.andExpect(view().name("events/show")).andExpect(handler().methodName("getEventDetails"));
 		
 		verify(eventService).findOne(1);
 	}

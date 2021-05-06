@@ -16,25 +16,43 @@
   <div layout:fragment="content">
     <div id="info">
       <blockquote>
-        <h1 th:text="${event}">Event Name</h1>
-        <p th:text="${venue}">Venue</p>
-        <p th:text="'At '+${time}+' on '+${#temporals.dayOfWeekName(date)}+', '+${#temporals.day(date)}+' '+${#temporals.monthName(date)}+' '+${#temporals.year(date)}"></p>
-        <p th:text="${description}">Description</p>
+        <h1 th:text="${event.name}">Event Name</h1>
+        <a th:text="${venue.name}" th:href="@{/venues/{num}(num=${venue.id})}">Venue</a>
+        <p th:text="'At '+${event.time}+' on '+${#temporals.dayOfWeekName(event.date)}+', '+${#temporals.day(event.date)}+' '+${#temporals.monthName(event.date)}+' '+${#temporals.year(event.date)}"></p>
+        <p th:text="${event.description}">Description</p>
       </blockquote>
-        
-      <a class="btn btn-primary" th:onclick="history.back(-1)" style="color:white" type='button'><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</a>   
+      <div > 
+        <div sec:authorize="isAuthenticated()" th:if="${isFuture}">
+          <form th:action = "@{/events/update/{id}(id=${event.id})}" th:method="get">
+            <button class = "btn btn-primary" type = "submit" th:value = "${event.id}" style="margin-right:3px;float: left;">
+              <i class="fas fa-edit"></i>
+          			Update Event 
+            </button> 
+          </form>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+          <form th:action = "@{/events/{num}(num=${event.id})}" th:method="delete">
+            <button class = "btn btn-danger" type = "submit" style="margin-right:3px;float: left;">
+              <i class="fas fa-trash" aria-hidden="true"></i>
+          	    Delete Event
+            </button>
+          </form>
+        </div>
+        <a class="btn btn-secondary" th:onclick="history.back(-1)" style="color:white" type='button'><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</a>   
+	  </div>
+	
     </div> 
    
 	<div>
-		<form class="form-horizontal" method = "post" th:action="@{/events/{id}(id=${id})}">
+		<form class="form-horizontal" method = "post" th:action="@{/events/{id}(id=${event.id})}">
 			<div class="form-group">
 				<div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
 			</div>
 			<div class="col-sm-6 form-group">
-				<label>Tweet this event!</label> 
-				<input type="text" class="form-control" maxlength = "256" name = "tweet" th:placeholder = "${event}" th:required = "required">
+				<b><label>Tweet this event!</label></b> 
+				<input type="text" class="form-control" maxlength = "256" name = "tweet" th:placeholder = "${event.name} + ' looks great!'" th:required = "required" style="margin-bottom:5px">
+			  <button type="submit" class="btn btn-primary"><i class="fab fa-twitter"></i>  Tweet!</button>
 			</div>
-			<button type="submit" class="btn btn-primary">Tweet!</button>
 		</form>
 	</div>
   
@@ -43,10 +61,10 @@
     
     /*<![CDATA[*/
 	  mapboxgl.accessToken = 'pk.eyJ1IjoidzU3NjY0bWsiLCJhIjoiY2tuamhxa2c3MDE4ZjJwbDRjOXltd2FhMiJ9.3VK7Vq1Z6SClt1Ic2SzzQA';
-      var longitude= [[${longitude}]];
-      var latitude = [[${latitude}]];
-      var event_time = /*[[${time}]]*/;
-      var event_name = /*[[${event}]]*/;
+      var longitude= [[${event.venue.longitude}]];
+      var latitude = [[${event.venue.latitude}]];
+      var event_time = /*[[${event.time}]]*/;
+      var event_name = /*[[${event.name}]]*/;
       console.log(longitude);
       console.log(latitude);
       console.log(event_time);
