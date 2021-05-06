@@ -145,6 +145,7 @@ public class EventsController {
 		model.addAttribute("event", event);	
 		return "events/update";
 	}
+	
 	@PostMapping(value = "/update/{id}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public String saveUpdate(@RequestBody @Valid @ModelAttribute Event event, 
 			BindingResult errors,

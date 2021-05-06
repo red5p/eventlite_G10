@@ -22,13 +22,23 @@
         <p th:text="${description}">Description</p>
       </blockquote>
       <div > 
-        <form th:action = "@{/events/{num}(num=${id})}" style="float: left;" th:method="delete">
-          <button class = "btn btn-danger" type = "submit" style="margin-right:3px">
-            <i class="fas fa-trash" aria-hidden="true"></i>
-          	  Delete Event
-          </button>
-        </form>
-        <a class="btn btn-primary" th:onclick="history.back(-1)" style="color:white" type='button'><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</a>   
+        <div sec:authorize="isAuthenticated()">
+          <form th:action = "@{/events/update/{id}(id=${id})}" th:method="get">
+            <button class = "btn btn-primary" type = "submit" th:value = "${id}" style="margin-right:3px;float: left;">
+              <i class="fas fa-edit"></i>
+          			Update Event 
+            </button> 
+          </form>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+          <form th:action = "@{/events/{num}(num=${id})}" th:method="delete">
+            <button class = "btn btn-danger" type = "submit" style="margin-right:3px;float: left;">
+              <i class="fas fa-trash" aria-hidden="true"></i>
+          	    Delete Event
+            </button>
+          </form>
+        </div>
+        <a class="btn btn-secondary" th:onclick="history.back(-1)" style="color:white" type='button'><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</a>   
 	  </div>
 	
     </div> 

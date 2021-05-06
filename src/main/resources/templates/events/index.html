@@ -38,7 +38,6 @@
           <th><i class="fas fa-map-marker-alt"></i> Venue</th>
           <th><i class="fas fa-calendar"></i> Date</th>
           <th><i class="fas fa-clock"></i> Time</th>
-          <th><i class="fas fa-edit"></i> Update</th>
         </tr>
       </thead>
       <tbody>
@@ -47,17 +46,6 @@
           <td><a th:href="@{/venues/{num}(num=${e.venue.id})}" th:text="${e.venue.name}">Event Venue</a></td>
           <td th:text="${{e.date}}">Event date</td>
           <td th:text="${{e.time}}">Event time</td>         	
-          <td>
-          <div sec:authorize="isAuthenticated()">
-          	<form th:action = "@{/events/update/{id}(id=${e.id})}" th:method="get">
-          		<button class = "btn btn-primary" type = "submit" th:value = "${e.id}"><i class="fas fa-edit"></i>
-          			Update Event 
-          		</button> 
-          		</form>
-          	</div>
-          </td>
-          	
-
         </tr>
       </tbody>
     </table>
@@ -118,7 +106,6 @@
           <th><i class="fas fa-map-marker-alt"></i> Venue</th>
           <th><i class="fas fa-calendar"></i> Date</th>
           <th><i class="fas fa-clock"></i> Time</th>
-          <th><i class="fas fa-edit"></i> Update</th>
         </tr>
       </thead>
       <tbody>
@@ -127,17 +114,6 @@
           <td><a th:href="@{/venues/{num}(num=${e.venue.id})}" th:text="${e.venue.name}">Event Venue</a></td>
           <td th:text="${{e.date}}">Event date</td>
           <td th:text="${{e.time}}">Event time</td>      	
-          <td>
-          <div sec:authorize="isAuthenticated()">
-          	<form th:action = "@{/events/update/{id}(id=${e.id})}" th:method="get">
-          		<button class = "btn btn-primary" type = "submit" th:value = "${e.id}"><i class="fas fa-edit"></i>
-          			Update Event 
-          		</button> 
-          		</form>
-          	</div>
-          </td>
-          	
-
         </tr>
       </tbody>
     </table>
