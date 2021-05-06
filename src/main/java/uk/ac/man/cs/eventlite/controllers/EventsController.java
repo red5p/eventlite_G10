@@ -151,9 +151,6 @@ public class EventsController {
 			BindingResult errors,
 			Model model
 			) {
-		if(errors.hasErrors()) {
-			return "redirect:/update/" + event.getId();
-		}
 		eventService.save(event);
 		return "redirect:/events";
 	}
