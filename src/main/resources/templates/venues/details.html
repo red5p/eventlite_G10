@@ -57,9 +57,26 @@
         
       </blockquote>
       
-      <a class="btn btn-secondary" th:onclick="history.back(-1)" style="color:white" type='button'><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</a>   
-    </div> 
-    
+      <div> 
+        <div sec:authorize="isAuthenticated()" >
+          <form th:action = "@{/venues/update_venue/{id}(id=${venue.id})}" th:method="get" style="margin-right:3px;float: left;">
+            <button class = "btn btn-primary" type = "submit" th:value = "${venue.id}"><i class="fas fa-edit"></i>
+              Update Venue 
+            </button>
+          </form>
+        </div>
+        <div sec:authorize="isAuthenticated()">      
+          <form th:action = "@{/venues/{num}(num=${venue.id})}" th:method="delete" style="margin-right:3px;float: left;">
+	        <button class="btn btn-danger" type="submit">
+	          <i class="fa fa-trash-alt" aria-hidden="true"></i> 
+	            Delete Venue
+	        </button>
+	      </form>
+        </div>
+        
+        <a class="btn btn-secondary" th:onclick="history.back(-1)" style="color:white" type='button'><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</a>   
+	  </div>
+
   </div>
 </body>
 </html>
