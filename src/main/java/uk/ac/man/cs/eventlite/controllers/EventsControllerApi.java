@@ -36,6 +36,9 @@ import org.springframework.web.bind.annotation.RestController;
 import uk.ac.man.cs.eventlite.dao.EventService;
 
 import uk.ac.man.cs.eventlite.entities.Event;
+import uk.ac.man.cs.eventlite.entities.Venue;
+import uk.ac.man.cs.eventlite.response.EventResponse;
+import uk.ac.man.cs.eventlite.response.VenueResponse;
 
 @RestController
 @RequestMapping(value = "/api/events", produces = { MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE })
@@ -56,6 +59,33 @@ public class EventsControllerApi {
 
 		return CollectionModel.of(events, selfLink);
 	}
+
+//------Single Event------------------------------------------------------------------------------------
+	
+	@GetMapping("/{id}")
+	public EventResponse venue(@PathVariable("id") long id) {
+		Event theEvent = eventService.findOne(id);
+		
+		return detailedEvent(theEvent);
+	}
+	
+	private EventResponse detailedEvent(Event event) {
+		
+		EventResponse theEvent = new EventResponse();
+		theEvent.date = event.getDate();
+		theEvent.time = event.getTime();
+		theEvent.name = event.getName();
+		
+		Link selfLink = linkTo(EventsControllerApi.class).slash(event.getId()).withSelfRel();
+		Link eventLink = linkTo(EventsControllerApi.class).slash(event.getId()).withRel("event");
+		Link venueLink = linkTo(EventsControllerApi.class).slash(event.getId()).slash("venue").withRel("venue");
+		
+		theEvent.add(selfLink, eventLink, venueLink);
+		
+		return theEvent;
+		
+	}
+	
 	
 	@DeleteMapping("/delete/{id}")
 	public void deleteEvent(@PathVariable Long id) {

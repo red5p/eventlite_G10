@@ -59,7 +59,7 @@ public class VenuesControllerApi {
 
 //------Single Venue------------------------------------------------------------------------------------
 	
-	@GetMapping("{id}")
+	@GetMapping("/{id}")
 	public VenueResponse venue(@PathVariable("id") long id) {
 		Venue theVenue = venueService.findOne(id);
 		
