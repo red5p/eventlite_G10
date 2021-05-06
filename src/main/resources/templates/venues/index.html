@@ -54,11 +54,13 @@
     
 	<div sec:authorize="isAuthenticated()">
 		<p>
-			<a class = "btn btn-info" role = "button" href="/venues/new">
+			<a class = "btn btn-primary" role = "button" href="/venues/new" style="float:left; margin-right:3px">
 			Add Venue
 			</a>
 		</p>
 	</div>
+    <a class="btn btn-secondary" th:onclick="history.back(-1)" style="color:white;float:left" type='button'><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</a>   
+	
 	
     </div>
   	
