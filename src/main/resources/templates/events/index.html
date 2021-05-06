@@ -8,13 +8,44 @@
   <script src="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js"></script>
   <style>
     div {margin-top: 10px; margin-bottom: 10px}
-    #info {background-color: #ededed; padding: 60px 25px 60px 25px}
     #map {top: 0; bottom: 0; width: 100%; height:600px}
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #ffffff;
+    }
+    li {
+      float: left;
+    }
+    li a {
+      display: block;
+      color: #666;
+      text-align: center;
+      padding: 7px 10px 7px 10px;
+      text-decoration: none;
+    }
+    li .button:hover {
+      background-color: 	#3581ff;
+      color:#ffffff;
+      text-decoration: none;
+    }
+    .active {
+      background-color:#d5d5d5;
+      text-decoration: none;
+      color:#ffffff;
+    }
   </style>
 </head>
 <body>
   <div layout:fragment="content">
-    <h1>All events</h1>
+    <ul>
+      <li><a href="/events" class="active button"><b>Event List</b></a></li>
+      <li><a href="/venues" class="button"><b>Venue List</b></a></li>
+      <li style="float:right"><a href="/"><i class="fas fa-home fa-lg"></i></a></li>
+    </ul>
+    <h1>Events</h1>
 
 
 
@@ -125,7 +156,6 @@
 			</a>
 		</p>
 	</div>
-	<a class="btn btn-secondary" th:onclick="history.back(-1)" style="color:white;float:left" type='button'><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</a>   
 
   </div>
 
