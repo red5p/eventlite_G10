@@ -147,13 +147,17 @@ public class EventsController {
 	}
 	
 	@PostMapping(value = "/update/{id}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	public String saveUpdate(@RequestBody @Valid @ModelAttribute Event event, 
+	public String saveUpdate(@PathVariable("id") long eventId, @RequestBody @Valid @ModelAttribute Event event, 
 			BindingResult errors,
 			Model model
 			) {
+		if(errors.hasErrors()) {
+			return String.format("redirect:/events/%d", eventId);
+		}
 		eventService.save(event);
 		return "redirect:/events";
 	}
+	
 	
 	@RequestMapping(value = "/")
 	public String findEventsByName(@RequestParam(value="keyword") String keyword, Model model) {
@@ -171,6 +175,7 @@ public class EventsController {
 	public String greeting(@PathVariable("id") long id, Model model) {
 
 		Event event = eventService.findOne(id);
+		model.addAttribute("isFuture",event.isFuture());
 		model.addAttribute("event", event.getName());
 		model.addAttribute("date", event.getDate());
 		model.addAttribute("time", event.getTime());

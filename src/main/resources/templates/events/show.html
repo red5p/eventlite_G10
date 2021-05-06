@@ -22,7 +22,7 @@
         <p th:text="${description}">Description</p>
       </blockquote>
       <div > 
-        <div sec:authorize="isAuthenticated()">
+        <div sec:authorize="isAuthenticated()" th:if="${isFuture}">
           <form th:action = "@{/events/update/{id}(id=${id})}" th:method="get">
             <button class = "btn btn-primary" type = "submit" th:value = "${id}" style="margin-right:3px;float: left;">
               <i class="fas fa-edit"></i>
