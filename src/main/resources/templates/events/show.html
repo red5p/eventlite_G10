@@ -49,10 +49,10 @@
 				<div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
 			</div>
 			<div class="col-sm-6 form-group">
-				<label>Tweet this event!</label> 
-				<input type="text" class="form-control" maxlength = "256" name = "tweet" th:placeholder = "${event}" th:required = "required">
+				<b><label>Tweet this event!</label></b> 
+				<input type="text" class="form-control" maxlength = "256" name = "tweet" th:placeholder = "${event} + ' looks great!'" th:required = "required" style="margin-bottom:5px">
+			  <button type="submit" class="btn btn-primary"><i class="fab fa-twitter"></i>  Tweet!</button>
 			</div>
-			<button type="submit" class="btn btn-primary">Tweet!</button>
 		</form>
 	</div>
   
