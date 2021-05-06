@@ -93,6 +93,33 @@ public class EventsControllerTest {
 
         verify(eventService).findAll();
     }
+    
+    @Test
+	public void SearchEventsWithEmptyString() throws Exception {
+		when(eventService.findPastEventsByName("")).thenReturn(Collections.<Event>singletonList(event));
+		when(eventService.findUpcomingEventsByName("")).thenReturn(Collections.<Event>singletonList(event));
+		when(event.getVenue()).thenReturn(venue);
+		
+		mvc.perform(get("/events/?keyword=").accept(MediaType.TEXT_HTML))
+		.andExpect(status().isOk()).andExpect(view().name("events/index")).andExpect(handler().methodName("findEventsByName"));
+		
+		verify(eventService).findPastEventsByName("");
+		verify(eventService).findUpcomingEventsByName("");
+	}
+	
+	@Test
+	public void searchEvents() throws Exception {
+		when(eventService.findPastEventsByName("showcase")).thenReturn(Collections.<Event>singletonList(event));
+		when(eventService.findUpcomingEventsByName("showcase")).thenReturn(Collections.<Event>singletonList(event));
+		when(event.getVenue()).thenReturn(venue);
+		
+		mvc.perform(get("/events/?keyword=showcase").accept(MediaType.TEXT_HTML))
+		.andExpect(status().isOk()).andExpect(view().name("events/index")).andExpect(handler().methodName("findEventsByName"));
+		
+		verify(eventService).findPastEventsByName("showcase");
+		verify(eventService).findUpcomingEventsByName("showcase");
+	}
+
 
     @Test
     public void deleteAnEvent() throws Exception {

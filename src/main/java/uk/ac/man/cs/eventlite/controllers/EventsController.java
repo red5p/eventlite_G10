@@ -164,7 +164,32 @@ public class EventsController {
 		Iterable<Event> upcomingEvents = eventService.findUpcomingEventsByName(keyword);
 		Iterable<Event> pastEvents = eventService.findPastEventsByName(keyword);
 		
-		//model.addAttribute("events", allEvents);
+		List<Double> longitude = new ArrayList<Double>();
+		List<Double> latitude = new ArrayList<Double>();
+				
+		for (Event e:eventService.findUpcomingEvents()) {
+
+			longitude.add(e.getVenue().getLongitude());
+			latitude.add(e.getVenue().getLatitude());
+		}
+
+		model.addAttribute("longitude", longitude);
+		model.addAttribute("latitude", latitude);
+		
+		List<Status> timeline;
+		try {
+			timeline = twitterService.getTimeline();
+			if (timeline != null) {
+				if (timeline.size() > 5) {
+					timeline = timeline.subList(0, 5);
+				}
+				model.addAttribute("timeline", timeline);
+			}
+			
+		} catch (TwitterException e) {
+			e.printStackTrace();
+		}
+		
 		model.addAttribute("upcomingevents", upcomingEvents);
 		model.addAttribute("pastevents", pastEvents);
 		
