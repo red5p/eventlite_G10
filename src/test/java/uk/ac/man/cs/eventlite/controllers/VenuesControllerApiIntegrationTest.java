@@ -22,7 +22,7 @@ import uk.ac.man.cs.eventlite.EventLite;
 @SpringBootTest(classes = EventLite.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @ActiveProfiles("test")
-public class EventsControllerApiIntegrationTest extends AbstractTransactionalJUnit4SpringContextTests {
+public class VenuesControllerApiIntegrationTest extends AbstractTransactionalJUnit4SpringContextTests {
 
 	@LocalServerPort
 	private int port;
@@ -35,16 +35,16 @@ public class EventsControllerApiIntegrationTest extends AbstractTransactionalJUn
 	}
 
 	@Test
-	public void testGetAllEvents() {
-		client.get().uri("/events").accept(MediaType.APPLICATION_JSON).exchange().expectStatus().isOk().expectHeader()
-				.contentType(MediaType.APPLICATION_JSON).expectBody().jsonPath("$._links.self.href")
-				.value(endsWith("/api/events")).jsonPath("$._embedded.events.length()").value(equalTo(7));
+	public void testGetAllVenues() {
+		client.get().uri("/venues").accept(MediaType.APPLICATION_JSON).exchange().expectStatus().isOk().expectHeader()
+		.contentType(MediaType.APPLICATION_JSON).expectBody().jsonPath("$._links.self.href")
+		.value(endsWith("/api/venues")).jsonPath("$._embedded.venues.length()").value(equalTo(3));
 	}
 	
 	@Test
-	public void testGetSingleEvent() {
-		client.get().uri("/events/4").accept(MediaType.APPLICATION_JSON).exchange().expectStatus().isOk().expectHeader()
+	public void testGetSingleVenue() {
+		client.get().uri("/venues/1").accept(MediaType.APPLICATION_JSON).exchange().expectStatus().isOk().expectHeader()
 		.contentType(MediaType.APPLICATION_JSON).expectBody().jsonPath("$._links.self.href")
-		.value(endsWith("/api/events/4"));
+		.value(endsWith("/api/venues/1"));
 	}
 }
