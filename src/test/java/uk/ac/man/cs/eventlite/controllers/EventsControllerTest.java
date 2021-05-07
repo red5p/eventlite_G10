@@ -8,6 +8,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import antlr.debug.NewLineEvent;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.equalTo;
@@ -130,6 +132,16 @@ public class EventsControllerTest {
 
     }
     
+    @Test
+    public void NewEvent() throws Exception {
+    	mvc.perform(get("/events/new").with(user("Rob").roles(Security.ADMIN_ROLE))
+    			.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+    			.accept(MediaType.TEXT_HTML)
+    			.with(csrf()))
+    			.andExpect(status().isOk())
+    			.andExpect(handler().methodName("newEvent"))
+    			.andExpect(view().name("events/new"));
+    }
     
 	@Test
 	public void addEvent() throws Exception{
@@ -162,17 +174,30 @@ public class EventsControllerTest {
 		verify(eventService).findOne(1);
 	}
 	
-
+	@Test
 	public void getAllEventsByName() throws Exception {
 		
 		when(eventService.findAll()).thenReturn(Collections.<Event>singletonList(event));
 		
-		mvc.perform(get("/events?keyword=abc").accept(MediaType.TEXT_HTML)).andExpect(status().isOk())
-		.andExpect(handler().methodName("getAllEvents")).andExpect(view().name("events/index"));
+		mvc.perform(get("/events/?keyword=abc").accept(MediaType.TEXT_HTML)).andExpect(status().isOk())
+		.andExpect(handler().methodName("findEventsByName")).andExpect(view().name("events/index"));
 		
 		verify(eventService).findUpcomingEventsByName("abc");
 	}
-
+	
+	@Test
+	public void goToUpdate() throws Exception {
+		when(eventService.findOne(4)).thenReturn(event);
+		
+		mvc.perform(get("/events/update/4").with(user("Rob").roles(Security.ADMIN_ROLE))
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.accept(MediaType.TEXT_HTML)
+				.with(csrf()))
+				.andExpect(model().hasNoErrors())
+				.andExpect(status().isOk())
+				.andExpect(handler().methodName("goToUpdate"))
+				.andExpect(view().name("events/update"));
+	}
 
     @Test
     public void afterEvent() throws Exception {

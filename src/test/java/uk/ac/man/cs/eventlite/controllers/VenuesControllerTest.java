@@ -74,6 +74,30 @@ public class VenuesControllerTest {
         verify(venueService).deleteById(id);
     }
     
+    @Test
+    public void NewVenue() throws Exception {
+    	mvc.perform(get("/venues/new").with(user("Rob").roles(Security.ADMIN_ROLE))
+    			.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+    			.accept(MediaType.TEXT_HTML)
+    			.with(csrf()))
+    			.andExpect(status().isOk())
+    			.andExpect(handler().methodName("newVenue"))
+    			.andExpect(view().name("venues/new"));
+    }
+    
+	@Test
+	public void goToUpdate() throws Exception {
+		when(venueService.findOne(1)).thenReturn(venue);
+		
+		mvc.perform(get("/venues/update_venue/1").with(user("Rob").roles(Security.ADMIN_ROLE))
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.accept(MediaType.TEXT_HTML)
+				.with(csrf()))
+				.andExpect(status().isOk())
+				.andExpect(handler().methodName("goToUpdate"))
+				.andExpect(view().name("venues/update_venue"));
+	}
+    
 	@Test
 	public void SearchVenuesWithEmptyString() throws Exception {
 		when(venueService.findAllByName("")).thenReturn(Collections.<Venue>singletonList(venue));
