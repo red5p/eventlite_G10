@@ -19,5 +19,7 @@ public interface VenueService {
 
 	public void deleteById(long eventid);
 
+	public Object existsById(int i);
+
 
 }

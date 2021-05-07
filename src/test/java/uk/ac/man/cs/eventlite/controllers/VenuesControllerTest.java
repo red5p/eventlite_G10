@@ -148,7 +148,7 @@ public class VenuesControllerTest {
 		verify(venueService, never()).save(venue);
 	}
 	
-
+	
 	public void AfterVenue() throws Exception {
 		ArgumentCaptor<Venue> arg = ArgumentCaptor.forClass(Venue.class);
 		mvc.perform(MockMvcRequestBuilders.post("/venues/newVenue").with(user("Organiser").roles(Security.ADMIN_ROLE))
@@ -230,5 +230,6 @@ public class VenuesControllerTest {
 	        .andExpect(status().isMethodNotAllowed());
 
 	}
+	
     
 }
