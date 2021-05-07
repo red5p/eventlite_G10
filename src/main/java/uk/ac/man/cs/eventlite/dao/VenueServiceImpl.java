@@ -55,5 +55,11 @@ public class VenueServiceImpl implements VenueService {
 		venueRepository.deleteById(id);
 	}
 
+	@Override
+	public Object existsById(int i) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
